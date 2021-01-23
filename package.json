@@ -1,17 +1,17 @@
 {
-  "name": "react-boilerplate",
-  "version": "4.0.0",
-  "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
+  "name": "colexga",
+  "version": "1.0.0",
+  "description": "A platform to write and get evaluation of the written texts",
   "repository": {
     "type": "git",
-    "url": "git://github.com/react-boilerplate/react-boilerplate.git"
+    "url": "git@github.com:instituteofai/colexga.git"
   },
   "engines": {
     "npm": ">=5",
     "node": ">=8.15.1"
   },
-  "author": "Max Stoiber",
-  "license": "MIT",
+  "author": "Team IAI",
+  "license": "None",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
     "preanalyze": "npm run analyze:clean",
@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.4.3",
+    "antd": "^4.10.3",
     "chalk": "^2.4.2",
     "compression": "1.7.4",
     "connected-react-router": "6.4.0",
