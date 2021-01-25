@@ -27,10 +27,13 @@ function Header() {
         </Link> */}
       </div>
       <div>
+        <HeaderLink to="/practice">Practice</HeaderLink>
+      </div>
+      <div>
+        <HeaderLink to="/register">Register</HeaderLink>
+      </div>
+      <div>
         <HeaderLink to="/about">About</HeaderLink>
-        {/* <Link to="/about">
-          <Button type="link">About</Button>
-        </Link> */}
       </div>
     </NavBar>
   );
