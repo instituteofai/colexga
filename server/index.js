@@ -5,6 +5,7 @@ const logger = require('./logger');
 
 const argv = require('./argv');
 const port = require('./port');
+const mongoose = require('./mongoose');
 const setup = require('./middlewares/frontendMiddleware');
 const isDev = process.env.NODE_ENV !== 'production';
 const ngrok =
@@ -34,6 +35,9 @@ app.get('*.js', (req, res, next) => {
   res.set('Content-Encoding', 'gzip');
   next();
 });
+
+// Open mongoose connection
+mongoose.connect();
 
 // Start your app.
 app.listen(port, host, async err => {
