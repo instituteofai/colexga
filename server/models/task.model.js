@@ -4,11 +4,14 @@ const taskSchema = new mongoose.Schema({
   question: {
     type: String,
     trim: true,
+    required: true,
   },
   allowedTimeInSeconds: {
     type: Number,
+    required: true,
   },
   test: {
+    required: true,
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Test',
   },

@@ -1,4 +1,5 @@
 const Test = require('../models/test.model');
+const Task = require('../models/task.model');
 
 exports.get = async (req, res, next) => {
   const tests = await Test.find();
@@ -26,6 +27,7 @@ exports.put = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
   await Test.findByIdAndDelete(req.params.testId);
+  await Task.deleteMany({ test: req.params.testId });
   res.status(204).end();
   return next();
 };
