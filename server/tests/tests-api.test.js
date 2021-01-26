@@ -40,4 +40,30 @@ describe('Tests API', () => {
     expect(res.body.tests.length).to.equal(expectedLength);
 
   });
+
+  it('should edit details of saved test', async () => {
+
+    const res = await request(app)
+      .post('/api/tests')
+      .send({ name: 'Test Name' })
+      .expect(201);
+
+    const testId = res.body._id;
+
+    const savedTest = await Test.findById(testId);
+    expect(savedTest.active).to.be.false;
+
+    const updateRes = await request(app)
+      .put(`/api/tests/${testId}`)
+      .send({ name: 'Updated name', active: true })
+      .expect(200);
+
+    expect(updateRes.body.active).to.be.true;
+    expect(updateRes.body.name).to.equal('Updated name');
+
+    const updatedTest = await Test.findById(testId);
+    expect(updatedTest.active).to.be.true;
+    expect(updatedTest.name).to.equal('Updated name');
+
+  });
 });

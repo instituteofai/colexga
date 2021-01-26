@@ -15,3 +15,11 @@ exports.post = async (req, res, next) => {
   res.status(201).json(savedTest);
   return next();
 };
+
+exports.put = async (req, res, next) => {
+  const test = await Test.findById(req.params.testId);
+  Object.assign(test, req.body);
+  const updatedTest = await test.save();
+  res.status(200).json(updatedTest);
+  return next();
+};

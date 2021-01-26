@@ -8,4 +8,9 @@ router
   .get(testController.get)
   .post(testController.post);
 
+router
+  .route('/tests/:testId')
+  .put(testController.put)
+  .delete(testController.delete);
+
 module.exports = router;
