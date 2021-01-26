@@ -17,4 +17,27 @@ describe('Tests API', () => {
     const savedTest = await Test.findById(res.body._id);
     expect(savedTest.name).to.equal(payload.name);
   });
+
+  it('should return newly created tests', async () => {
+
+    let res = await request(app)
+      .get('/api/tests')
+      .expect(200);
+
+    expect(res.body.tests).to.be.an('array');
+    const previousLength = res.body.tests.length;
+    const expectedLength = previousLength + 1;
+
+    await request(app)
+      .post('/api/tests')
+      .send({ name: 'Test Name' })
+      .expect(201);
+
+    res = await request(app)
+      .get('/api/tests')
+      .expect(200)
+
+    expect(res.body.tests.length).to.equal(expectedLength);
+
+  });
 });

@@ -1,7 +1,8 @@
 const Test = require('../models/test.model');
 
-exports.get = (req, res, next) => {
-  res.status(200).end();
+exports.get = async (req, res, next) => {
+  const tests = await Test.find();
+  res.status(200).json({ tests });
   return next();
 };
 
