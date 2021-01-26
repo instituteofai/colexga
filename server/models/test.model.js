@@ -13,4 +13,4 @@ const testSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('Test', testSchema);
+module.exports = mongoose.models.Test || mongoose.model('Test', testSchema);
