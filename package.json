@@ -41,8 +41,8 @@
     "test:clean": "rimraf ./coverage",
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
-    "test-server": "mocha --require server/tests/hooks.js \"server/tests/**/*.js\"",
-    "test-server:watch": "mocha --watch --require server/tests/hooks.js \"server/tests/**/*.js\"",
+    "test-server": "cross-env NODE_ENV=test mocha --require server/tests/hooks.js \"server/tests/**/*.js\"",
+    "test-server:watch": "cross-env NODE_ENV=test mocha --watch --require server/tests/hooks.js \"server/tests/**/*.js\"",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prettify": "prettier --write"
   },
