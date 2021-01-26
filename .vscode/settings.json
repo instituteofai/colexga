@@ -1,4 +1,6 @@
 {
   "javascript.preferences.quoteStyle": "single",
-  "typescript.preferences.quoteStyle": "single"
+  "typescript.preferences.quoteStyle": "single",
+  "js/ts.implicitProjectConfig.checkJs": true,
+  "editor.tabSize": 2
 }
