@@ -1,19 +1,17 @@
 const Task = require('../models/task.model');
 
-exports.get = async (req, res, next) => {
+exports.get = async (req, res) => {
   const tasks = await Task.find({ test: req.params.testId });
-  res.status(200).json({ tasks });
-  return next();
+  return res.status(200).json({ tasks });
 };
 
-exports.post = async (req, res, next) => {
+exports.post = async (req, res) => {
   const task = new Task(req.body);
   const savedTask = await task.save();
-  res.status(201).json(savedTask);
-  return next();
+  return res.status(201).json(savedTask);
 };
 
-exports.put = async (req, res, next) => {
+exports.put = async (req, res) => {
   const task = await Task.findOne({
     _id: req.params.taskId,
     test: req.params.testId,
@@ -23,15 +21,13 @@ exports.put = async (req, res, next) => {
   }
   Object.assign(task, req.body);
   const updatedTask = await task.save();
-  res.status(200).json(updatedTask);
-  return next();
+  return res.status(200).json(updatedTask);
 };
 
-exports.delete = async (req, res, next) => {
+exports.delete = async (req, res) => {
   await Task.findOneAndDelete({
     _id: req.params.taskId,
     test: req.params.testId,
   });
-  res.status(204).end();
-  return next();
+  return res.status(204).end();
 };
