@@ -66,4 +66,26 @@ describe('Tests API', () => {
     expect(updatedTest.name).to.equal('Updated name');
 
   });
+
+  it('should delete an existing test', async () => {
+
+    const res = await request(app)
+      .post('/api/tests')
+      .send({ name: 'A Test to be deleted' })
+      .expect(201);
+
+    const testId = res.body._id;
+
+    const savedTest = await Test.findById(testId);
+    expect(savedTest.active).to.be.false;
+
+    await request(app)
+      .delete(`/api/tests/${testId}`)
+      .expect(204);
+    
+      const deletedTest = await Test.findById(testId);
+      expect(deletedTest).to.be.null;
+
+  });
+
 });

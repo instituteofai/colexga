@@ -23,3 +23,9 @@ exports.put = async (req, res, next) => {
   res.status(200).json(updatedTest);
   return next();
 };
+
+exports.delete = async (req, res, next) => {
+  await Test.findByIdAndDelete(req.params.testId);
+  res.status(204).end();
+  return next();
+};
