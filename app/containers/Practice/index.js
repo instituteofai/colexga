@@ -4,25 +4,41 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Link } from 'react-router-dom';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
-import makeSelectPractice from './selectors';
+import { useInjectSaga } from '../../utils/injectSaga';
+import { useInjectReducer } from '../../utils/injectReducer';
+import makeSelectPractice, {
+  makeSelectError,
+  makeSelectLoading,
+  makeSelectTests,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { loadTests } from './actions';
+import PracticeTestList from '../../components/PracticeTestList';
 
-export function Practice() {
+export function Practice({ loading, error, tests, fetchTests }) {
   useInjectReducer({ key: 'practice', reducer });
   useInjectSaga({ key: 'practice', saga });
+
+  useEffect(() => {
+    // Fetch Tests when page loads
+    if (!tests) fetchTests();
+  }, []);
+
+  const practiceTestListProps = {
+    loading,
+    error,
+    tests,
+  };
 
   return (
     <div>
@@ -32,22 +48,30 @@ export function Practice() {
       </Helmet>
       <FormattedMessage {...messages.header} />
       <br />
-      <Link to="/task/ielts">IELTS</Link>
+      <PracticeTestList {...practiceTestListProps} />
     </div>
   );
 }
 
 Practice.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  tests: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  fetchTests: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   practice: makeSelectPractice(),
+  tests: makeSelectTests(),
+  loading: makeSelectLoading(),
+  error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchTests: () => dispatch(loadTests()),
   };
 }
 

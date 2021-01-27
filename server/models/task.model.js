@@ -6,6 +6,11 @@ const taskSchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
+  questionType: {
+    type: String,
+    trim: true,
+    required: true,
+  },
   allowedTimeInSeconds: {
     type: Number,
     required: true,
