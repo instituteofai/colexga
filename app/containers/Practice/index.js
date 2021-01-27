@@ -22,10 +22,11 @@ import makeSelectPractice, {
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { loadTests } from './actions';
+import { loadTests, selectTest } from './actions';
 import PracticeTestList from '../../components/PracticeTestList';
 
-export function Practice({ loading, error, tests, fetchTests }) {
+// export function Practice(props) {}
+export function Practice({ loading, error, tests, fetchTests, onSelectTest }) {
   useInjectReducer({ key: 'practice', reducer });
   useInjectSaga({ key: 'practice', saga });
 
@@ -38,6 +39,7 @@ export function Practice({ loading, error, tests, fetchTests }) {
     loading,
     error,
     tests,
+    onSelectTest,
   };
 
   return (
@@ -59,6 +61,7 @@ Practice.propTypes = {
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   tests: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   fetchTests: PropTypes.func,
+  onSelectTest: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -72,6 +75,9 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchTests: () => dispatch(loadTests()),
+    onSelectTest: testId => {
+      dispatch(selectTest(testId));
+    },
   };
 }
 

@@ -39,10 +39,17 @@ const makeSelectTests = () =>
     practiceState => practiceState.tests,
   );
 
+const makeSelectTestId = () =>
+  createSelector(
+    selectPracticeDomain,
+    practiceState => practiceState.testId,
+  );
+
 export default makeSelectPractice;
 export {
   selectPracticeDomain,
   makeSelectLoading,
   makeSelectError,
   makeSelectTests,
+  makeSelectTestId,
 };

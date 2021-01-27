@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import LoadingIndicator from '../LoadingIndicator';
 
-function PracticeTestList({ loading, error, tests }) {
+function PracticeTestList({ loading, error, tests, onSelectTest }) {
   if (loading) {
     return <LoadingIndicator />;
   }
@@ -22,7 +22,9 @@ function PracticeTestList({ loading, error, tests }) {
   if (tests !== false) {
     content = tests.tests.map(test => (
       <div key={test._id}>
-        <Link to={`/task/${test._id}`}>{test.name}</Link>
+        <Link to={`/task/${test._id}`} onClick={() => onSelectTest(test._id)}>
+          {test.name}
+        </Link>
       </div>
     ));
   }
@@ -34,6 +36,7 @@ PracticeTestList.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.any,
   tests: PropTypes.any,
+  onSelectTest: PropTypes.func,
 };
 
 export default PracticeTestList;

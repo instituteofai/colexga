@@ -4,7 +4,12 @@
  *
  */
 
-import { LOAD_TESTS, LOAD_TESTS_SUCCESS, LOAD_TESTS_ERROR } from './constants';
+import {
+  LOAD_TESTS,
+  LOAD_TESTS_SUCCESS,
+  LOAD_TESTS_ERROR,
+  SELECT_TEST,
+} from './constants';
 
 export function loadTests() {
   return {
@@ -23,5 +28,12 @@ export function testsLoadingError(error) {
   return {
     type: LOAD_TESTS_ERROR,
     error,
+  };
+}
+
+export function selectTest(testId) {
+  return {
+    type: SELECT_TEST,
+    testId,
   };
 }

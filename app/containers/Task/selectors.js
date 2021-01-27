@@ -11,15 +11,23 @@ const selectTaskDomain = state => state.task || initialState;
  * Other specific selectors
  */
 
-/**
- * Default selector used by Task
- */
+const makeSelectLoading = () =>
+  createSelector(
+    selectTaskDomain,
+    taskState => taskState.loading,
+  );
+
+const makeSelectError = () =>
+  createSelector(
+    selectTaskDomain,
+    taskState => taskState.error,
+  );
 
 const makeSelectTask = () =>
   createSelector(
     selectTaskDomain,
-    substate => substate,
+    taskState => taskState.task,
   );
 
 export default makeSelectTask;
-export { selectTaskDomain };
+export { selectTaskDomain, makeSelectLoading, makeSelectError, makeSelectTask };

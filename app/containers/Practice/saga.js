@@ -1,7 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 
 // import request from 'utils/request';
-import request from 'utils/request';
+import request from '../../utils/request';
 import { testsLoaded, testsLoadingError } from './actions';
 import { LOAD_TESTS } from './constants';
 

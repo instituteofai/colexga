@@ -4,7 +4,7 @@
  *
  */
 
-import { LOAD_TASK, LOAD_TASK_ERROR, LOAD_TASK_SUCCESS } from './constants';
+import { LOAD_TASK, LOAD_TASK_SUCCESS, LOAD_TASK_ERROR } from './constants';
 
 /**
  * Load a task, this action starts the request saga

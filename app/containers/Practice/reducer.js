@@ -4,12 +4,18 @@
  *
  */
 import produce from 'immer';
-import { LOAD_TESTS, LOAD_TESTS_SUCCESS, LOAD_TESTS_ERROR } from './constants';
+import {
+  LOAD_TESTS,
+  LOAD_TESTS_SUCCESS,
+  LOAD_TESTS_ERROR,
+  SELECT_TEST,
+} from './constants';
 
 export const initialState = {
   loading: false,
   error: false,
   tests: false,
+  testId: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -28,6 +34,9 @@ const practiceReducer = (state = initialState, action) =>
       case LOAD_TESTS_ERROR:
         draft.error = action.error;
         draft.loading = false;
+        break;
+      case SELECT_TEST:
+        draft.testId = action.testId;
         break;
     }
   });
