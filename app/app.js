@@ -14,6 +14,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import history from 'utils/history';
+import throttle from 'lodash/throttle';
 import 'sanitize.css/sanitize.css';
 
 // Import root app
@@ -33,10 +34,17 @@ import configureStore from './configureStore';
 // Import i18n messages
 import { translationMessages } from './i18n';
 
+import { loadState, saveState } from './localStorage';
+
 // Create redux store with history
-const initialState = {};
+const initialState = loadState() || {}; // First try to initialise state with localStorage
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
+
+// Event listener on every store update, to persiste the state on localStorage
+store.subscribe(throttle(() => {
+  saveState(store.getState()); // TODO: storing entire State right now, Reconsider
+}));
 
 const render = messages => {
   ReactDOM.render(
