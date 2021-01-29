@@ -23,6 +23,7 @@ import saga from './saga';
 import messages from './messages';
 import { loadTask } from './actions';
 import Question from '../../components/Question';
+import Timer from '../../components/Timer';
 
 export function Task({ loading, error, task, fetchTask }) {
   useInjectReducer({ key: 'task', reducer });
@@ -46,6 +47,7 @@ export function Task({ loading, error, task, fetchTask }) {
         <meta name="description" content="Description of Task" />
       </Helmet>
       <FormattedMessage {...messages.header} />
+      <Timer {...questionProps.task} />
       <Question {...questionProps} />
       <h3>Your Resposne:</h3>
       <div>Write here...</div>

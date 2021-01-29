@@ -1,0 +1,43 @@
+/**
+ *
+ * Timer
+ *
+ */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+// import styled from 'styled-components';
+
+import { FormattedMessage } from 'react-intl';
+import messages from './messages';
+
+function Timer({ allowedTimeInSeconds }) {
+  const [timer, setTimer] = React.useState(allowedTimeInSeconds);
+  const id = React.useRef(null);
+  const clear = () => {
+    window.clearInterval(id.current);
+  };
+  React.useEffect(() => {
+    id.current = window.setInterval(() => {
+      setTimer(time => time - 1);
+    }, 1000);
+    return () => clear();
+  }, []);
+  React.useEffect(() => {
+    if (timer === 0) {
+      clear();
+    }
+  }, [timer]);
+  return (
+    <div>
+      <FormattedMessage {...messages.header} />
+      {timer}
+    </div>
+  );
+}
+
+Timer.propTypes = {
+  allowedTimeInSeconds: PropTypes.number,
+};
+
+export default Timer;
