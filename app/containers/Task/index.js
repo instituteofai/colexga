@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -12,16 +12,32 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
-import makeSelectTask from './selectors';
+import { useInjectSaga } from '../../utils/injectSaga';
+import { useInjectReducer } from '../../utils/injectReducer';
+import makeSelectTask, {
+  makeSelectError,
+  makeSelectLoading,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { loadTask } from './actions';
+import Question from '../../components/Question';
 
-export function Task() {
+export function Task({ loading, error, task, fetchTask }) {
   useInjectReducer({ key: 'task', reducer });
   useInjectSaga({ key: 'task', saga });
+
+  useEffect(() => {
+    // Fetch task when page loads
+    if (!task) fetchTask();
+  }, []);
+
+  const questionProps = {
+    loading,
+    error,
+    task,
+  };
 
   return (
     <div>
@@ -30,18 +46,9 @@ export function Task() {
         <meta name="description" content="Description of Task" />
       </Helmet>
       <FormattedMessage {...messages.header} />
-      <div>
-        <h3>Task:</h3>
-        <h4>
-          Some film companies spend millions of dollars on the production of a
-          single movie. Is it necessary to spend a lot of money to make a good
-          What factors contribute to the success of a movie? Give reasons for
-          your answer and include any relevant examples from your own knowledge
-          experience.
-        </h4>
-      </div>
+      <Question {...questionProps} />
       <h3>Your Resposne:</h3>
-      <div contentEditable="true">Write here...</div>
+      <div>Write here...</div>
       <div>
         <button type="button">Submit</button>
       </div>
@@ -51,15 +58,22 @@ export function Task() {
 
 Task.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  task: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  fetchTask: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   task: makeSelectTask(),
+  loading: makeSelectLoading(),
+  error: makeSelectError(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    fetchTask: () => dispatch(loadTask()),
   };
 }
 

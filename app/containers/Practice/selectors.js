@@ -21,5 +21,35 @@ const makeSelectPractice = () =>
     substate => substate,
   );
 
+const makeSelectLoading = () =>
+  createSelector(
+    selectPracticeDomain,
+    practiceState => practiceState.loading,
+  );
+
+const makeSelectError = () =>
+  createSelector(
+    selectPracticeDomain,
+    practiceState => practiceState.error,
+  );
+
+const makeSelectTests = () =>
+  createSelector(
+    selectPracticeDomain,
+    practiceState => practiceState.tests,
+  );
+
+const makeSelectTestId = () =>
+  createSelector(
+    selectPracticeDomain,
+    practiceState => practiceState.testId,
+  );
+
 export default makeSelectPractice;
-export { selectPracticeDomain };
+export {
+  selectPracticeDomain,
+  makeSelectLoading,
+  makeSelectError,
+  makeSelectTests,
+  makeSelectTestId,
+};
