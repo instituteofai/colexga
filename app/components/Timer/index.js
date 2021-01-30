@@ -14,24 +14,28 @@ import messages from './messages';
 function Timer({ allowedTimeInSeconds }) {
   const [timer, setTimer] = React.useState(allowedTimeInSeconds);
   const id = React.useRef(null);
+
   const clear = () => {
     window.clearInterval(id.current);
   };
+
   React.useEffect(() => {
     id.current = window.setInterval(() => {
       setTimer(time => time - 1);
     }, 1000);
     return () => clear();
   }, []);
+
   React.useEffect(() => {
     if (timer === 0) {
       clear();
     }
   }, [timer]);
+
   return (
     <div>
       <FormattedMessage {...messages.header} />
-      {timer}
+      {new Date(timer * 1000).toISOString().substr(11, 8)}
     </div>
   );
 }

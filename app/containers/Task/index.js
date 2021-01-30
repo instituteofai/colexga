@@ -24,6 +24,7 @@ import messages from './messages';
 import { loadTask } from './actions';
 import Question from '../../components/Question';
 import Timer from '../../components/Timer';
+import Answer from '../../components/Answer';
 
 export function Task({ loading, error, task, fetchTask }) {
   useInjectReducer({ key: 'task', reducer });
@@ -33,6 +34,8 @@ export function Task({ loading, error, task, fetchTask }) {
     // Fetch task when page loads
     if (!task) fetchTask();
   }, []);
+
+  if (!task) return <div />;
 
   const questionProps = {
     loading,
@@ -49,8 +52,7 @@ export function Task({ loading, error, task, fetchTask }) {
       <FormattedMessage {...messages.header} />
       <Timer {...questionProps.task} />
       <Question {...questionProps} />
-      <h3>Your Resposne:</h3>
-      <div>Write here...</div>
+      <Answer />
       <div>
         <button type="button">Submit</button>
       </div>

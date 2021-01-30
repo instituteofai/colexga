@@ -11,6 +11,6 @@ export const scope = 'app.components.Timer';
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: 'Time left:',
+    defaultMessage: 'Time left',
   },
 });

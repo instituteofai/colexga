@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import LoadingIndicator from '../LoadingIndicator';
+import TaskTypeWrapper from './TaskTypeWrapper';
 
 function Question({ loading, error, task }) {
   if (loading) {
@@ -21,7 +22,10 @@ function Question({ loading, error, task }) {
   if (task !== false) {
     content = (
       <div>
-        <h2>Task:</h2>
+        <p>
+          Task Type: <TaskTypeWrapper>{task.questionType}</TaskTypeWrapper>
+        </p>
+        <h2>Question:</h2>
         <h3>{task.question}</h3>
       </div>
     );
