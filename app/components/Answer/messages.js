@@ -11,6 +11,6 @@ export const scope = 'app.components.Answer';
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: 'Response',
+    defaultMessage: 'Your Response:',
   },
 });

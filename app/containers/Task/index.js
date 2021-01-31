@@ -21,12 +21,12 @@ import makeSelectTask, {
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { loadTask } from './actions';
+import { loadTask, saveAnswer } from './actions';
 import Question from '../../components/Question';
 import Timer from '../../components/Timer';
 import Answer from '../../components/Answer';
 
-export function Task({ loading, error, task, fetchTask }) {
+export function Task({ loading, error, task, fetchTask, onSubmitAnswer, answerSaving }) {
   useInjectReducer({ key: 'task', reducer });
   useInjectSaga({ key: 'task', saga });
 
@@ -43,6 +43,10 @@ export function Task({ loading, error, task, fetchTask }) {
     task,
   };
 
+  const answerProps = {
+    onSubmitAnswer,
+  };
+
   return (
     <div>
       <Helmet>
@@ -50,12 +54,10 @@ export function Task({ loading, error, task, fetchTask }) {
         <meta name="description" content="Description of Task" />
       </Helmet>
       <FormattedMessage {...messages.header} />
+      <hr />
       <Timer {...questionProps.task} />
       <Question {...questionProps} />
-      <Answer />
-      <div>
-        <button type="button">Submit</button>
-      </div>
+      <Answer {...answerProps} />
     </div>
   );
 }
@@ -66,6 +68,9 @@ Task.propTypes = {
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   task: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   fetchTask: PropTypes.func,
+  onSubmitAnswer: PropTypes.func,
+  answerSaving: PropTypes.bool,
+  answerError: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -78,6 +83,9 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchTask: () => dispatch(loadTask()),
+    onSubmitAnswer: answer => {
+      dispatch(saveAnswer(answer));
+    },
   };
 }
 

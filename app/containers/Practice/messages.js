@@ -11,6 +11,6 @@ export const scope = 'app.containers.Practice';
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: 'This is the Practice container!',
+    defaultMessage: 'Practice Tests:',
   },
 });

@@ -11,6 +11,6 @@ export const scope = 'app.containers.Task';
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: 'This is the Task container!',
+    defaultMessage: 'Your task',
   },
 });

@@ -35,6 +35,7 @@ function Timer({ allowedTimeInSeconds }) {
   return (
     <div>
       <FormattedMessage {...messages.header} />
+      &nbsp;
       {new Date(timer * 1000).toISOString().substr(11, 8)}
     </div>
   );

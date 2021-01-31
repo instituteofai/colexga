@@ -23,7 +23,7 @@ function Question({ loading, error, task }) {
     content = (
       <div>
         <p>
-          Task Type: <TaskTypeWrapper>{task.questionType}</TaskTypeWrapper>
+          Type: <TaskTypeWrapper>{task.questionType}</TaskTypeWrapper>
         </p>
         <h2>Question:</h2>
         <h3>{task.question}</h3>
