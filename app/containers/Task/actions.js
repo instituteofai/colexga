@@ -55,6 +55,7 @@ export function answerSaved(submission) {
   return {
     type: SAVE_ANSWER_SUCCESS,
     submission,
+    notification: 'Your answer has been submitted successfully!',
   };
 }
 
@@ -62,5 +63,6 @@ export function answerSavingError(error) {
   return {
     type: SAVE_ANSWER_ERROR,
     error,
+    notification: 'Oops error occured, Please try again!',
   };
 }

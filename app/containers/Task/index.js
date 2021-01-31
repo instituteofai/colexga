@@ -15,6 +15,7 @@ import { compose } from 'redux';
 import { useInjectSaga } from '../../utils/injectSaga';
 import { useInjectReducer } from '../../utils/injectReducer';
 import makeSelectTask, {
+  makeSelectAnsNotification,
   makeSelectError,
   makeSelectLoading,
 } from './selectors';
@@ -25,8 +26,16 @@ import { loadTask, saveAnswer } from './actions';
 import Question from '../../components/Question';
 import Timer from '../../components/Timer';
 import Answer from '../../components/Answer';
+import NotifyBanner from '../../components/NotifyBanner';
 
-export function Task({ loading, error, task, fetchTask, onSubmitAnswer, answerSaving }) {
+export function Task({
+  loading,
+  error,
+  task,
+  fetchTask,
+  onSubmitAnswer,
+  answerNotification,
+}) {
   useInjectReducer({ key: 'task', reducer });
   useInjectSaga({ key: 'task', saga });
 
@@ -53,6 +62,7 @@ export function Task({ loading, error, task, fetchTask, onSubmitAnswer, answerSa
         <title>Task</title>
         <meta name="description" content="Description of Task" />
       </Helmet>
+      <NotifyBanner message={answerNotification} />
       <FormattedMessage {...messages.header} />
       <hr />
       <Timer {...questionProps.task} />
@@ -69,7 +79,7 @@ Task.propTypes = {
   task: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   fetchTask: PropTypes.func,
   onSubmitAnswer: PropTypes.func,
-  answerSaving: PropTypes.bool,
+  answerNotification: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   answerError: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
@@ -77,6 +87,7 @@ const mapStateToProps = createStructuredSelector({
   task: makeSelectTask(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
+  answerNotification: makeSelectAnsNotification(),
 });
 
 function mapDispatchToProps(dispatch) {

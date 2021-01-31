@@ -13,4 +13,8 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'Your task',
   },
+  notifySubmission: {
+    id: `${scope}.notifySubmission`,
+    defaultMessage: 'Your response has been submitted successfully!',
+  },
 });

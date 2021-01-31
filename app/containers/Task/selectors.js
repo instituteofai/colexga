@@ -29,5 +29,18 @@ const makeSelectTask = () =>
     taskState => taskState.task,
   );
 
+const makeSelectAnsNotification = () =>
+  createSelector(
+    selectTaskDomain,
+    taskState => taskState.answerNotification,
+  );
+
 export default makeSelectTask;
-export { selectTaskDomain, makeSelectLoading, makeSelectError, makeSelectTask };
+
+export {
+  selectTaskDomain,
+  makeSelectLoading,
+  makeSelectError,
+  makeSelectTask,
+  makeSelectAnsNotification,
+};

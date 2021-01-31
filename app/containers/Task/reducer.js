@@ -18,7 +18,7 @@ export const initialState = {
   error: false,
   task: false,
   answer: false,
-  answerSaving: false,
+  answerNotification: false,
   answerError: false,
 };
 
@@ -42,13 +42,12 @@ const taskReducer = (state = initialState, action) =>
 
       case SAVE_ANSWER:
         draft.answer = action.answer;
-        draft.answerSaving = true;
         break;
       case SAVE_ANSWER_SUCCESS:
-        draft.answerSaving = false;
+        draft.answerNotification = action.notification;
         break;
       case SAVE_ANSWER_ERROR:
-        draft.answerSaving = false;
+        draft.answerNotification = action.notification;
         draft.answerError = action.error;
         break;
     }

@@ -29,7 +29,6 @@ export function* getTask() {
 }
 
 export function* saveAnswer(answer) {
-  // Build payload
   const testId = yield select(makeSelectTestId());
   const task = yield select(makeSelectTask());
   const tests = yield select(makeSelectTests());
