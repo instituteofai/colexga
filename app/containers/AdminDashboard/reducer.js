@@ -9,6 +9,9 @@ import {
   LOAD_TESTS,
   LOAD_TESTS_SUCCESS,
   LOAD_TESTS_ERROR,
+  CREATE_TEST,
+  CREATE_TEST_ERROR,
+  CREATE_TEST_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -31,6 +34,17 @@ const adminDashboardReducer = (state = initialState, action) =>
       case LOAD_TESTS_ERROR:
         draft.loading = false;
         draft.error = true;
+        break;
+      case CREATE_TEST:
+        draft.loading = true;
+        break;
+      case CREATE_TEST_ERROR:
+        draft.loading = false;
+        draft.error = true;
+        break;
+      case CREATE_TEST_SUCCESS:
+        draft.loading = false;
+        draft.tests.push(action.payload.test);
         break;
       case DEFAULT_ACTION:
         break;
