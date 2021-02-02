@@ -12,6 +12,9 @@ import {
   CREATE_TEST,
   CREATE_TEST_SUCCESS,
   CREATE_TEST_ERROR,
+  DELETE_TEST,
+  DELETE_TEST_SUCCESS,
+  DELETE_TEST_ERROR,
 } from './constants';
 
 export function defaultAction() {
@@ -57,6 +60,27 @@ export function createTestSuccess(test) {
 export function createTestError(error) {
   return {
     type: CREATE_TEST_ERROR,
+    payload: { error },
+  };
+}
+
+export function deleteTest(testId) {
+  return {
+    type: DELETE_TEST,
+    payload: { testId },
+  };
+}
+
+export function deleteTestSuccess(testId) {
+  return {
+    type: DELETE_TEST_SUCCESS,
+    payload: { testId },
+  };
+}
+
+export function deleteTestError(error) {
+  return {
+    type: DELETE_TEST_ERROR,
     payload: { error },
   };
 }

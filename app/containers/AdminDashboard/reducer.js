@@ -12,6 +12,9 @@ import {
   CREATE_TEST,
   CREATE_TEST_ERROR,
   CREATE_TEST_SUCCESS,
+  DELETE_TEST,
+  DELETE_TEST_ERROR,
+  DELETE_TEST_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -35,6 +38,7 @@ const adminDashboardReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.error = true;
         break;
+
       case CREATE_TEST:
         draft.loading = true;
         break;
@@ -46,6 +50,20 @@ const adminDashboardReducer = (state = initialState, action) =>
         draft.loading = false;
         draft.tests.push(action.payload.test);
         break;
+
+      case DELETE_TEST:
+        draft.loading = true;
+        break;
+      case DELETE_TEST_ERROR:
+        draft.loading = false;
+        draft.error = true;
+        break;
+      case DELETE_TEST_SUCCESS:
+        draft.loading = false;
+        // eslint-disable-next-line no-underscore-dangle
+        draft.tests = draft.tests.filter(e => e._id !== action.payload.testId);
+        break;
+
       case DEFAULT_ACTION:
         break;
     }

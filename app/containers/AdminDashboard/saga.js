@@ -5,10 +5,12 @@ import request from 'utils/request';
 import {
   createTestError,
   createTestSuccess,
+  deleteTestError,
+  deleteTestSuccess,
   testsLoaded,
   testsLoadingError,
 } from './actions';
-import { CREATE_TEST, LOAD_TESTS } from './constants';
+import { CREATE_TEST, DELETE_TEST, LOAD_TESTS } from './constants';
 
 export function* getTests() {
   const requestURL = `/api/tests`;
@@ -36,9 +38,22 @@ export function* createTest({ payload }) {
   }
 }
 
+export function* deleteTest({ payload }) {
+  const requestURL = `/api/test/${payload.testId}`;
+  try {
+    yield call(request, requestURL, {
+      method: 'DELETE',
+    });
+    yield put(deleteTestSuccess(payload.testId));
+  } catch (error) {
+    yield put(deleteTestError(error));
+  }
+}
+
 // Individual exports for testing
 export default function* adminDashboardSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(LOAD_TESTS, getTests);
   yield takeEvery(CREATE_TEST, createTest);
+  yield takeEvery(DELETE_TEST, deleteTest);
 }
