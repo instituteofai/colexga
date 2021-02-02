@@ -9,8 +9,15 @@ import {
   deleteTestSuccess,
   testsLoaded,
   testsLoadingError,
+  updateTestActiveError,
+  updateTestActiveSuccess,
 } from './actions';
-import { CREATE_TEST, DELETE_TEST, LOAD_TESTS } from './constants';
+import {
+  CREATE_TEST,
+  DELETE_TEST,
+  LOAD_TESTS,
+  UPDATE_TEST_ACTIVE,
+} from './constants';
 
 export function* getTests() {
   const requestURL = `/api/tests`;
@@ -39,7 +46,7 @@ export function* createTest({ payload }) {
 }
 
 export function* deleteTest({ payload }) {
-  const requestURL = `/api/test/${payload.testId}`;
+  const requestURL = `/api/tests/${payload.testId}`;
   try {
     yield call(request, requestURL, {
       method: 'DELETE',
@@ -50,10 +57,27 @@ export function* deleteTest({ payload }) {
   }
 }
 
+export function* updateTestActive({ payload }) {
+  const requestURL = `/api/tests/${payload.testId}`;
+  try {
+    yield call(request, requestURL, {
+      method: 'PUT',
+      body: JSON.stringify({ active: payload.activeValue }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    yield put(updateTestActiveSuccess(payload.testId, payload.activeValue));
+  } catch (error) {
+    yield put(updateTestActiveError(error));
+  }
+}
+
 // Individual exports for testing
 export default function* adminDashboardSaga() {
   // See example in containers/HomePage/saga.js
   yield takeLatest(LOAD_TESTS, getTests);
   yield takeEvery(CREATE_TEST, createTest);
   yield takeEvery(DELETE_TEST, deleteTest);
+  yield takeEvery(UPDATE_TEST_ACTIVE, updateTestActive);
 }

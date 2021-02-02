@@ -15,6 +15,9 @@ import {
   DELETE_TEST,
   DELETE_TEST_SUCCESS,
   DELETE_TEST_ERROR,
+  UPDATE_TEST_ACTIVE,
+  UPDATE_TEST_ACTIVE_ERROR,
+  UPDATE_TEST_ACTIVE_SUCCESS,
 } from './constants';
 
 export function defaultAction() {
@@ -84,3 +87,21 @@ export function deleteTestError(error) {
     payload: { error },
   };
 }
+
+function makeTestActiveAction(type) {
+  return (testId, activeValue) => ({
+    type,
+    payload: {
+      testId,
+      activeValue,
+    },
+  });
+}
+
+export const updateTestActive = makeTestActiveAction(UPDATE_TEST_ACTIVE);
+export const updateTestActiveSuccess = makeTestActiveAction(
+  UPDATE_TEST_ACTIVE_SUCCESS,
+);
+export const updateTestActiveError = makeTestActiveAction(
+  UPDATE_TEST_ACTIVE_ERROR,
+);

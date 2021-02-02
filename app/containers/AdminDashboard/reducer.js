@@ -15,6 +15,9 @@ import {
   DELETE_TEST,
   DELETE_TEST_ERROR,
   DELETE_TEST_SUCCESS,
+  UPDATE_TEST_ACTIVE,
+  UPDATE_TEST_ACTIVE_ERROR,
+  UPDATE_TEST_ACTIVE_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -62,6 +65,19 @@ const adminDashboardReducer = (state = initialState, action) =>
         draft.loading = false;
         // eslint-disable-next-line no-underscore-dangle
         draft.tests = draft.tests.filter(e => e._id !== action.payload.testId);
+        break;
+
+      case UPDATE_TEST_ACTIVE:
+        draft.loading = true;
+        break;
+      case UPDATE_TEST_ACTIVE_ERROR:
+        draft.loading = false;
+        draft.error = true;
+        break;
+      case UPDATE_TEST_ACTIVE_SUCCESS:
+        draft.loading = false;
+        // eslint-disable-next-line no-underscore-dangle
+        draft.tests.find(e => e._id === action.payload.testId).active = true;
         break;
 
       case DEFAULT_ACTION:

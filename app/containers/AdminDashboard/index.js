@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
  *
  * AdminDashboard
@@ -17,7 +18,7 @@ import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectAdminDashboard from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { createTest, deleteTest, loadTests } from './actions';
+import { createTest, deleteTest, loadTests, updateTestActive } from './actions';
 
 const TestListItem = StyledComponent.div`
   border: 1px solid lightgray;
@@ -25,6 +26,9 @@ const TestListItem = StyledComponent.div`
   padding: 8px;
   display: flex;
   align-items: center;
+  * {
+    margin: 0 4px;
+  }
 `;
 
 const IconButton = StyledComponent.button`
@@ -37,6 +41,7 @@ const IconButton = StyledComponent.button`
     background-color: rgba(0, 0, 0, 0.03);
   }
 `;
+
 export function AdminDashboard({ dispatch, adminDashboard }) {
   useInjectReducer({ key: 'adminDashboard', reducer });
   useInjectSaga({ key: 'adminDashboard', saga });
@@ -83,6 +88,15 @@ export function AdminDashboard({ dispatch, adminDashboard }) {
             </span>
           </IconButton>
           <div>{e.name}</div>
+          <input
+            type="checkbox"
+            id={`active-test-${e._id}`}
+            defaultChecked={e.active}
+            onChange={changeEvent => {
+              dispatch(updateTestActive(e._id, changeEvent.target.checked));
+            }}
+          />
+          <label htmlFor={`active-test-${e._id}`}>Active</label>
         </TestListItem>
       ))}
     </div>
