@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 /**
  *
@@ -12,6 +13,7 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import StyledComponent from 'styled-components';
+import { push } from 'connected-react-router';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -52,6 +54,10 @@ export function AdminDashboard({ dispatch, adminDashboard }) {
 
   const [testName, setTestName] = useState('');
 
+  const handleTestClick = testId => {
+    dispatch(push(`admin/${testId}`));
+  };
+
   return (
     <div>
       <Helmet>
@@ -87,7 +93,15 @@ export function AdminDashboard({ dispatch, adminDashboard }) {
               ❌
             </span>
           </IconButton>
-          <div>{e.name}</div>
+          <button
+            type="button"
+            onClick={() => {
+              handleTestClick(e._id);
+            }}
+          >
+            {e.name}
+          </button>
+          {/* <TestNameLink href="">{e.name}</TestNameLink> */}
           <input
             type="checkbox"
             id={`active-test-${e._id}`}
