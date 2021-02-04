@@ -6,7 +6,8 @@ exports.get = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
-  const task = new Task(req.body);
+  const test = req.params.testId;
+  const task = new Task({ ...req.body, test });
   const savedTask = await task.save();
   return res.status(201).json(savedTask);
 };

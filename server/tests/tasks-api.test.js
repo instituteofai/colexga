@@ -21,7 +21,6 @@ describe('Tasks API', () => {
         question: 'Sample question',
         questionType: 'ESSAY',
         allowedTimeInSeconds: 1200,
-        test: testId
       })
       .expect(201);
 
@@ -48,7 +47,6 @@ describe('Tasks API', () => {
         question: 'Sample question',
         questionType: 'ESSAY',
         allowedTimeInSeconds: 1200,
-        test: testId
       })
       .expect(201);
 
@@ -68,7 +66,6 @@ describe('Tasks API', () => {
         question: 'Sample question',
         questionType: 'ESSAY',
         allowedTimeInSeconds: 1200,
-        test: testId
       })
       .expect(201);
 
@@ -102,7 +99,6 @@ describe('Tasks API', () => {
         question: 'Sample question to delete',
         questionType: 'ESSAY',
         allowedTimeInSeconds: 1200,
-        test: testId
       })
       .expect(201);
 
@@ -128,7 +124,6 @@ describe('Tasks API', () => {
         question: 'Sample question to delete with test',
         questionType: 'ESSAY',
         allowedTimeInSeconds: 1200,
-        test: testId
       })
       .expect(201);
 
