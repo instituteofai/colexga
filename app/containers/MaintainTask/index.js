@@ -12,6 +12,7 @@ import { Helmet } from 'react-helmet';
 // import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { push } from 'connected-react-router';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -36,6 +37,14 @@ export function MaintainTask({ match, dispatch, maintainTask }) {
         <title>MaintainTask</title>
         <meta name="description" content="Description of MaintainTask" />
       </Helmet>
+      <button
+        type="button"
+        onClick={() => {
+          dispatch(push(`${match.url}/new`));
+        }}
+      >
+        Add New Task
+      </button>
       {maintainTask.tasks.map(task => (
         <div key={task._id}>{task.question}</div>
       ))}
