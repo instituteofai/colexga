@@ -22,7 +22,7 @@ import makeSelectTask, {
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { loadTask, saveAnswer } from './actions';
+import { loadTask, saveAnswer, updateTimerValue } from './actions';
 import Question from '../../components/Question';
 import Timer from '../../components/Timer';
 import Answer from '../../components/Answer';
@@ -35,6 +35,7 @@ export function Task({
   fetchTask,
   onSubmitAnswer,
   answerNotification,
+  updateTimer,
 }) {
   useInjectReducer({ key: 'task', reducer });
   useInjectSaga({ key: 'task', saga });
@@ -65,7 +66,10 @@ export function Task({
       <NotifyBanner message={answerNotification} />
       <FormattedMessage {...messages.header} />
       <hr />
-      <Timer {...questionProps.task} />
+      <Timer
+        allowedTimeInSeconds={questionProps.task.allowedTimeInSeconds}
+        updateTimer={updateTimer}
+      />
       <Question {...questionProps} />
       <Answer {...answerProps} />
     </div>
@@ -81,6 +85,7 @@ Task.propTypes = {
   onSubmitAnswer: PropTypes.func,
   answerNotification: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   answerError: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  updateTimer: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -94,9 +99,8 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     fetchTask: () => dispatch(loadTask()),
-    onSubmitAnswer: answer => {
-      dispatch(saveAnswer(answer));
-    },
+    onSubmitAnswer: answer => dispatch(saveAnswer(answer)),
+    updateTimer: seconds => dispatch(updateTimerValue(seconds)),
   };
 }
 

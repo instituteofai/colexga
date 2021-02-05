@@ -11,6 +11,7 @@ import {
   SAVE_ANSWER,
   SAVE_ANSWER_ERROR,
   SAVE_ANSWER_SUCCESS,
+  UPDATE_TIMER_VALUE,
 } from './constants';
 
 export const initialState = {
@@ -20,6 +21,7 @@ export const initialState = {
   answer: false,
   answerNotification: false,
   answerError: false,
+  timerValueInSeconds: 0,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -49,6 +51,10 @@ const taskReducer = (state = initialState, action) =>
       case SAVE_ANSWER_ERROR:
         draft.answerNotification = action.notification;
         draft.answerError = action.error;
+        break;
+
+      case UPDATE_TIMER_VALUE:
+        draft.timerValueInSeconds = action.seconds;
         break;
     }
   });

@@ -11,6 +11,7 @@ import {
   SAVE_ANSWER,
   SAVE_ANSWER_SUCCESS,
   SAVE_ANSWER_ERROR,
+  UPDATE_TIMER_VALUE,
 } from './constants';
 
 // TASK
@@ -64,5 +65,13 @@ export function answerSavingError(error) {
     type: SAVE_ANSWER_ERROR,
     error,
     notification: 'Oops error occured, Please try again!',
+  };
+}
+
+// Timer
+export function updateTimerValue(seconds) {
+  return {
+    type: UPDATE_TIMER_VALUE,
+    seconds,
   };
 }

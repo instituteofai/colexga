@@ -35,6 +35,12 @@ const makeSelectAnsNotification = () =>
     taskState => taskState.answerNotification,
   );
 
+const makeSelectTimerValue = () =>
+  createSelector(
+    selectTaskDomain,
+    taskState => taskState.timerValueInSeconds,
+  );
+
 export default makeSelectTask;
 
 export {
@@ -43,4 +49,5 @@ export {
   makeSelectError,
   makeSelectTask,
   makeSelectAnsNotification,
+  makeSelectTimerValue,
 };

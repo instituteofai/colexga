@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-function Timer({ allowedTimeInSeconds }) {
+function Timer({ allowedTimeInSeconds, updateTimer }) {
   const [timer, setTimer] = React.useState(allowedTimeInSeconds);
   const id = React.useRef(null);
 
@@ -27,6 +27,8 @@ function Timer({ allowedTimeInSeconds }) {
   }, []);
 
   React.useEffect(() => {
+    // Update task state with timer values
+    updateTimer(timer);
     if (timer === 0) {
       clear();
     }
@@ -43,6 +45,7 @@ function Timer({ allowedTimeInSeconds }) {
 
 Timer.propTypes = {
   allowedTimeInSeconds: PropTypes.number,
+  updateTimer: PropTypes.func,
 };
 
 export default Timer;

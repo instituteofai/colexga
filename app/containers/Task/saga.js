@@ -10,7 +10,7 @@ import {
   taskLoadingError,
 } from './actions';
 import { LOAD_TASK, SAVE_ANSWER } from './constants';
-import makeSelectTask from './selectors';
+import makeSelectTask, { makeSelectTimerValue } from './selectors';
 
 export function* getTask() {
   // Select testId from store
@@ -33,13 +33,14 @@ export function* saveAnswer(answer) {
   const task = yield select(makeSelectTask());
   const tests = yield select(makeSelectTests());
   const test = tests.tests.find(elem => elem._id === testId);
+  const timeTakenInSeconds = yield select(makeSelectTimerValue());
   const requestURL = `/api/submissions`;
   const payload = {
     taskId: task._id,
     question: task.question,
     questionType: task.questionType,
     answer: answer.answer,
-    timeTakenInSeconds: '1199',
+    timeTakenInSeconds,
     score: '8.2',
     createdOn: new Date(),
     testId: task._id,
