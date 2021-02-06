@@ -21,7 +21,7 @@ import makeSelectMaintainTask from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 // import messages from './messages';
-import { loadTasks } from './actions';
+import { loadTasks, deleteTask } from './actions';
 
 export function MaintainTask({ match, dispatch, maintainTask }) {
   useInjectReducer({ key: 'maintainTask', reducer });
@@ -48,6 +48,17 @@ export function MaintainTask({ match, dispatch, maintainTask }) {
       </button>
       {maintainTask.tasks.map(task => (
         <div key={task._id}>
+          <button
+            type="button"
+            onClick={() => {
+              // eslint-disable-next-line no-underscore-dangle
+              dispatch(deleteTask(match.params.id, task._id));
+            }}
+          >
+            <span role="img" aria-label="cross">
+              ❌
+            </span>
+          </button>
           <Link to={`${match.params.id}/${task._id}`}>{task.question}</Link>
         </div>
       ))}
