@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /**
  *
  * TaskDetails
@@ -18,9 +19,9 @@ import reducer from './reducer';
 import saga from './saga';
 // import messages from './messages';
 import EditTask from '../../components/EditTask';
-import { addTask } from './actions';
+import { addTask, loadTask, updateTask } from './actions';
 
-export function TaskDetails({ dispatch, match }) {
+export function TaskDetails({ dispatch, match, taskDetails }) {
   useInjectReducer({ key: 'taskDetails', reducer });
   useInjectSaga({ key: 'taskDetails', saga });
 
@@ -30,10 +31,19 @@ export function TaskDetails({ dispatch, match }) {
     dispatch(addTask(testId, { question, questionType, allowedTimeInSeconds }));
   };
 
-  // const handleUpdate = (type, duration, question) => {
-  //   console.log('Updating existing task!');
-  //   console.log(type, duration, question);
-  // };
+  const handleUpdate = (questionType, allowedTimeInSeconds, question) => {
+    dispatch(
+      updateTask(testId, taskId, {
+        question,
+        questionType,
+        allowedTimeInSeconds,
+      }),
+    );
+  };
+
+  if (taskDetails.error) {
+    return <div>Error!</div>;
+  }
 
   if (taskId === 'new') {
     return (
@@ -43,21 +53,28 @@ export function TaskDetails({ dispatch, match }) {
     );
   }
 
-  // TODO: show EditTask component in "edit" mode
-  // return (
-  //   <div>
-  //     {/* If taskId is "new", show blank fields */}
-
-  //     {/* Else check if taskId exists in test. If it does, fill values in fields */}
-  //     <EditTask onSave={handleUpdate} />
-  //     {/* If taskId doesn't exist, show error message */}
-  //   </div>
-  // );
+  // If this component is loaded after a new task is created, the details of the task will be in the state
+  // Otherwise, we need to fetch the task details from the backend
+  if (!taskDetails.task._id || taskDetails.task._id !== taskId) {
+    dispatch(loadTask(testId, taskId));
+  } else {
+    return (
+      <div>
+        <EditTask
+          currentType={taskDetails.task.questionType}
+          currentDuration={taskDetails.task.allowedTimeInSeconds}
+          currentQuestion={taskDetails.task.question}
+          onSave={handleUpdate}
+        />
+      </div>
+    );
+  }
 }
 
 TaskDetails.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object,
+  taskDetails: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

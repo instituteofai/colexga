@@ -42,8 +42,8 @@ export default function App() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/about" component={About} />
         <Route exact path="/admin" component={AdminDashboard} />
-        <Route exact path="/admin/:id" component={MaintainTask} />
         <Route exact path="/admin/:id/:taskId" component={TaskDetails} />
+        <Route exact path="/admin/:id" component={MaintainTask} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />

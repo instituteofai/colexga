@@ -9,6 +9,12 @@ import {
   ADD_TASK,
   ADD_TASK_ERROR,
   ADD_TASK_SUCCESS,
+  LOAD_TASK,
+  LOAD_TASK_ERROR,
+  LOAD_TASK_SUCCESS,
+  UPDATE_TASK,
+  UPDATE_TASK_ERROR,
+  UPDATE_TASK_SUCCESS,
 } from './constants';
 
 export const initialState = {
@@ -25,15 +31,21 @@ const taskDetailsReducer = (state = initialState, action) =>
         break;
 
       case ADD_TASK:
+      case LOAD_TASK:
+      case UPDATE_TASK:
         draft.loading = true;
         break;
 
       case ADD_TASK_ERROR:
+      case LOAD_TASK_ERROR:
+      case UPDATE_TASK_ERROR:
         draft.loading = false;
         draft.error = true;
         break;
 
       case ADD_TASK_SUCCESS:
+      case LOAD_TASK_SUCCESS:
+      case UPDATE_TASK_SUCCESS:
         draft.loading = false;
         draft.task = action.payload.task;
     }

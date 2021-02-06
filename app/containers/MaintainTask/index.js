@@ -13,6 +13,7 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { push } from 'connected-react-router';
+import { Link } from 'react-router-dom';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -46,7 +47,9 @@ export function MaintainTask({ match, dispatch, maintainTask }) {
         Add New Task
       </button>
       {maintainTask.tasks.map(task => (
-        <div key={task._id}>{task.question}</div>
+        <div key={task._id}>
+          <Link to={`${match.params.id}/${task._id}`}>{task.question}</Link>
+        </div>
       ))}
     </div>
   );
