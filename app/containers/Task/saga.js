@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+import { push } from 'connected-react-router';
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 
 import request from '../../utils/request';
@@ -8,9 +9,13 @@ import {
   answerSavingError,
   taskLoaded,
   taskLoadingError,
+  updateTimerValue,
 } from './actions';
 import { LOAD_TASK, SAVE_ANSWER } from './constants';
-import makeSelectTask, { makeSelectTimerValue } from './selectors';
+import makeSelectTask, {
+  makeSelectAnswer,
+  makeSelectTimerValue,
+} from './selectors';
 
 export function* getTask() {
   // Select testId from store
@@ -23,24 +28,28 @@ export function* getTask() {
     const randomIdx = Math.floor(Math.random() * tasks.tasks.length);
     const task = tasks.tasks[randomIdx];
     yield put(taskLoaded(task));
+    // Initialize Timer value
+    console.log('calling action udpate timer: ', task.allowedTimeInSeconds);
+    yield put(updateTimerValue(task.allowedTimeInSeconds));
   } catch (error) {
     yield put(taskLoadingError(error));
   }
 }
 
-export function* saveAnswer(answer) {
+export function* saveAnswer() {
   const testId = yield select(makeSelectTestId());
   const task = yield select(makeSelectTask());
   const tests = yield select(makeSelectTests());
+  const answerText = yield select(makeSelectAnswer());
   const test = tests.tests.find(elem => elem._id === testId);
-  const timeTakenInSeconds = yield select(makeSelectTimerValue());
+  const timeLeftInSeconds = yield select(makeSelectTimerValue());
   const requestURL = `/api/submissions`;
   const payload = {
     taskId: task._id,
     question: task.question,
     questionType: task.questionType,
-    answer: answer.answer,
-    timeTakenInSeconds,
+    answer: answerText,
+    timeLeftInSeconds,
     score: '8.2',
     createdOn: new Date(),
     testId: task._id,
@@ -60,9 +69,14 @@ export function* saveAnswer(answer) {
 
   try {
     const submission = yield call(request, requestURL, options);
-    yield put(answerSaved(submission));
+    // submission successful, update state
+    const notification = 'Your answer has been submitted successfully!';
+    yield put(answerSaved(submission, notification));
+    // redirect to home
+    yield put(push('/'));
   } catch (error) {
-    yield put(answerSavingError(error));
+    const notification = 'Oops error occured, Please try again!';
+    yield put(answerSavingError(error, notification));
   }
 }
 

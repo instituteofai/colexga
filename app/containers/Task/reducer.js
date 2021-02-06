@@ -8,9 +8,11 @@ import {
   LOAD_TASK,
   LOAD_TASK_ERROR,
   LOAD_TASK_SUCCESS,
+  RESET,
   SAVE_ANSWER,
   SAVE_ANSWER_ERROR,
   SAVE_ANSWER_SUCCESS,
+  UPDATE_ANSWER,
   UPDATE_TIMER_VALUE,
 } from './constants';
 
@@ -18,7 +20,8 @@ export const initialState = {
   loading: false,
   error: false,
   task: false,
-  answer: false,
+  answerText: '',
+  submission: false,
   answerNotification: false,
   answerError: false,
   timerValueInSeconds: 0,
@@ -42,10 +45,13 @@ const taskReducer = (state = initialState, action) =>
         draft.loading = false;
         break;
 
+      case UPDATE_ANSWER:
+        draft.answerText = action.answerText;
+        break;
       case SAVE_ANSWER:
-        draft.answer = action.answer;
         break;
       case SAVE_ANSWER_SUCCESS:
+        draft.submission = action.submission;
         draft.answerNotification = action.notification;
         break;
       case SAVE_ANSWER_ERROR:
@@ -55,6 +61,10 @@ const taskReducer = (state = initialState, action) =>
 
       case UPDATE_TIMER_VALUE:
         draft.timerValueInSeconds = action.seconds;
+        break;
+
+      case RESET:
+        draft = initialState;
         break;
     }
   });

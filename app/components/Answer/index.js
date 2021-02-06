@@ -13,8 +13,7 @@ import messages from './messages';
 import TextArea from './TextArea';
 import Button from '../Button';
 
-function Answer({ onSubmitAnswer }) {
-  const [txtAreaValue, setTxtAreaValue] = React.useState('');
+function Answer({ onSubmitAnswer, answerText, updateAnswerText }) {
   return (
     <div>
       <div>
@@ -22,13 +21,13 @@ function Answer({ onSubmitAnswer }) {
       </div>
       <div>
         <TextArea
-          value={txtAreaValue}
-          onChange={evt => setTxtAreaValue(evt.target.value)}
+          value={answerText}
+          onChange={evt => updateAnswerText(evt.target.value)}
           placeholder="Type here..."
         />
       </div>
       <div>
-        <Button onClick={() => onSubmitAnswer(txtAreaValue)}>Submit</Button>
+        <Button onClick={() => onSubmitAnswer()}>Submit</Button>
       </div>
     </div>
   );
@@ -36,6 +35,8 @@ function Answer({ onSubmitAnswer }) {
 
 Answer.propTypes = {
   onSubmitAnswer: PropTypes.func,
+  answerText: PropTypes.string,
+  updateAnswerText: PropTypes.func,
 };
 
 export default Answer;

@@ -12,6 +12,8 @@ import {
   SAVE_ANSWER_SUCCESS,
   SAVE_ANSWER_ERROR,
   UPDATE_TIMER_VALUE,
+  RESET,
+  UPDATE_ANSWER,
 } from './constants';
 
 // TASK
@@ -45,26 +47,32 @@ export function taskLoadingError(error) {
 }
 
 // ANSWER
-export function saveAnswer(answer) {
+export function updateAnswer(answerText) {
   return {
-    type: SAVE_ANSWER,
-    answer,
+    type: UPDATE_ANSWER,
+    answerText,
   };
 }
 
-export function answerSaved(submission) {
+export function saveAnswer() {
+  return {
+    type: SAVE_ANSWER,
+  };
+}
+
+export function answerSaved(submission, notification) {
   return {
     type: SAVE_ANSWER_SUCCESS,
     submission,
-    notification: 'Your answer has been submitted successfully!',
+    notification,
   };
 }
 
-export function answerSavingError(error) {
+export function answerSavingError(error, notification) {
   return {
     type: SAVE_ANSWER_ERROR,
     error,
-    notification: 'Oops error occured, Please try again!',
+    notification,
   };
 }
 
@@ -73,5 +81,12 @@ export function updateTimerValue(seconds) {
   return {
     type: UPDATE_TIMER_VALUE,
     seconds,
+  };
+}
+
+// Reset State
+export function reset() {
+  return {
+    type: RESET,
   };
 }

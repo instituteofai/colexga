@@ -29,6 +29,18 @@ const makeSelectTask = () =>
     taskState => taskState.task,
   );
 
+const makeSelectAnswer = () =>
+  createSelector(
+    selectTaskDomain,
+    taskState => taskState.answerText,
+  );
+
+const makeSelectSubmission = () =>
+  createSelector(
+    selectTaskDomain,
+    taskState => taskState.submission,
+  );
+
 const makeSelectAnsNotification = () =>
   createSelector(
     selectTaskDomain,
@@ -48,6 +60,8 @@ export {
   makeSelectLoading,
   makeSelectError,
   makeSelectTask,
+  makeSelectAnswer,
+  makeSelectSubmission,
   makeSelectAnsNotification,
   makeSelectTimerValue,
 };

@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-function Timer({ allowedTimeInSeconds, updateTimer }) {
+function Timer({ allowedTimeInSeconds, updateTimer, onSubmitAnswer }) {
   const [timer, setTimer] = React.useState(allowedTimeInSeconds);
   const id = React.useRef(null);
 
@@ -31,6 +31,8 @@ function Timer({ allowedTimeInSeconds, updateTimer }) {
     updateTimer(timer);
     if (timer === 0) {
       clear();
+      // Time's up, Submit
+      onSubmitAnswer();
     }
   }, [timer]);
 
@@ -46,6 +48,7 @@ function Timer({ allowedTimeInSeconds, updateTimer }) {
 Timer.propTypes = {
   allowedTimeInSeconds: PropTypes.number,
   updateTimer: PropTypes.func,
+  onSubmitAnswer: PropTypes.func,
 };
 
 export default Timer;

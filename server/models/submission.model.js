@@ -21,7 +21,7 @@ const submissionSchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
-  timeTakenInSeconds: {
+  timeLeftInSeconds: {
     type: Number,
     required: true,
   },
