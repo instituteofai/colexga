@@ -13,7 +13,7 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import StyledComponent from 'styled-components';
-import { push } from 'connected-react-router';
+import { Link } from 'react-router-dom';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -21,17 +21,6 @@ import makeSelectAdminDashboard from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { createTest, deleteTest, loadTests, updateTestActive } from './actions';
-
-const TestListItem = StyledComponent.div`
-  border: 1px solid lightgray;
-  margin: 4px 0;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  * {
-    margin: 0 4px;
-  }
-`;
 
 const IconButton = StyledComponent.button`
   background: none;
@@ -54,9 +43,37 @@ export function AdminDashboard({ dispatch, adminDashboard }) {
 
   const [testName, setTestName] = useState('');
 
-  const handleTestClick = testId => {
-    dispatch(push(`admin/${testId}`));
-  };
+  const makeTableRow = test => (
+    <tr key={test._id}>
+      <td>
+        <IconButton
+          type="button"
+          onClick={() => {
+            dispatch(deleteTest(test._id));
+          }}
+        >
+          <span role="img" aria-label="cross">
+            ❌
+          </span>
+        </IconButton>
+      </td>
+
+      <td>
+        <input
+          type="checkbox"
+          id={`active-test-${test._id}`}
+          defaultChecked={test.active}
+          onChange={changeEvent => {
+            dispatch(updateTestActive(test._id, changeEvent.target.checked));
+          }}
+        />
+      </td>
+
+      <td>
+        <Link to={`admin/${test._id}`}>{test.name}</Link>
+      </td>
+    </tr>
+  );
 
   return (
     <div>
@@ -79,40 +96,16 @@ export function AdminDashboard({ dispatch, adminDashboard }) {
         Add Test
       </button>
 
-      {adminDashboard.tests.map(e => (
-        // eslint-disable-next-line no-underscore-dangle
-        <TestListItem key={e._id}>
-          <IconButton
-            type="button"
-            onClick={() => {
-              // eslint-disable-next-line no-underscore-dangle
-              dispatch(deleteTest(e._id));
-            }}
-          >
-            <span role="img" aria-label="cross">
-              ❌
-            </span>
-          </IconButton>
-          <button
-            type="button"
-            onClick={() => {
-              handleTestClick(e._id);
-            }}
-          >
-            {e.name}
-          </button>
-          {/* <TestNameLink href="">{e.name}</TestNameLink> */}
-          <input
-            type="checkbox"
-            id={`active-test-${e._id}`}
-            defaultChecked={e.active}
-            onChange={changeEvent => {
-              dispatch(updateTestActive(e._id, changeEvent.target.checked));
-            }}
-          />
-          <label htmlFor={`active-test-${e._id}`}>Active</label>
-        </TestListItem>
-      ))}
+      <table>
+        <thead>
+          <tr>
+            <th>Delete</th>
+            <th>Active</th>
+            <th>Test Name</th>
+          </tr>
+        </thead>
+        <tbody>{adminDashboard.tests.map(e => makeTableRow(e))}</tbody>
+      </table>
     </div>
   );
 }
