@@ -67,8 +67,7 @@ const taskReducer = (state = initialState, action) =>
         break;
 
       case RESET:
-        draft = initialState;
-        break;
+        return initialState;
     }
   });
 
