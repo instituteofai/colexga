@@ -49,7 +49,7 @@ export function* saveAnswer() {
     questionType: task.questionType,
     answer: answerText,
     timeLeftInSeconds,
-    score: '8.2',
+    score: 8.2,
     createdOn: new Date(),
     testId: task._id,
     testName: test.name,

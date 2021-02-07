@@ -7,6 +7,11 @@ npm install
 npm run start
 ```
 
+### Test
+Server
+```
+npm run test-server
+```
 
 ### Quick Notes
 Run `npm run generate` in your terminal and choose one of the parts you want to generate. They'll automatically be imported in the correct places and have everything set up correctly.
