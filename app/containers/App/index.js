@@ -12,7 +12,6 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import About from 'containers/About/Loadable';
 import Practice from 'containers/Practice/Loadable';
@@ -21,6 +20,7 @@ import Register from 'containers/Register/Loadable';
 
 import GlobalStyle from '../../global-styles';
 import Header from '../../components/Header';
+import Home from '../Home';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -42,7 +42,7 @@ export default function App() {
       </Helmet>
       <Header />
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={Home} />
         <Route exact path="/practice" component={Practice} />
         <Route exact path="/task/*" component={Task} />
         <Route exact path="/register" component={Register} />

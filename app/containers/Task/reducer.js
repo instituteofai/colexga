@@ -22,7 +22,10 @@ export const initialState = {
   task: false,
   answerText: '',
   submission: false,
-  answerNotification: false,
+  answerNotification: {
+    type: false,
+    message: false,
+  },
   answerError: false,
   timerValueInSeconds: 0,
 };
@@ -55,8 +58,8 @@ const taskReducer = (state = initialState, action) =>
         draft.answerNotification = action.notification;
         break;
       case SAVE_ANSWER_ERROR:
-        draft.answerNotification = action.notification;
         draft.answerError = action.error;
+        draft.answerNotification = action.notification;
         break;
 
       case UPDATE_TIMER_VALUE:

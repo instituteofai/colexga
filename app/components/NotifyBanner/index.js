@@ -14,9 +14,6 @@ function NotifyBanner({ message }) {
   if (!message) {
     return null;
   }
-  if (message) {
-    console.log('message aaya: ', message);
-  }
   return <h3>{message}</h3>;
 }
 

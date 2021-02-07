@@ -81,9 +81,9 @@ export function Task({
         <meta name="description" content="Description of Task" />
       </Helmet>
       <div>
-        {answerNotification && (
+        {answerNotification.message && (
           <div>
-            <NotifyBanner message={answerNotification} />
+            <NotifyBanner message={answerNotification.message} />
           </div>
         )}
         <FormattedMessage {...messages.header} />
@@ -105,7 +105,7 @@ Task.propTypes = {
   updateAnswerText: PropTypes.func,
   onSubmitAnswer: PropTypes.func,
   answerText: PropTypes.string,
-  answerNotification: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  answerNotification: PropTypes.object,
   answerError: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   updateTimer: PropTypes.func,
 };

@@ -3,13 +3,15 @@ import { push } from 'connected-react-router';
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 
 import request from '../../utils/request';
+import { updateGlobalNotification } from '../App/actions';
+import { notificationType } from '../App/constants';
 import { makeSelectTestId, makeSelectTests } from '../Practice/selectors';
 import {
   answerSaved,
   answerSavingError,
+  reset,
   taskLoaded,
   taskLoadingError,
-  updateTimerValue,
 } from './actions';
 import { LOAD_TASK, SAVE_ANSWER } from './constants';
 import makeSelectTask, {
@@ -28,9 +30,6 @@ export function* getTask() {
     const randomIdx = Math.floor(Math.random() * tasks.tasks.length);
     const task = tasks.tasks[randomIdx];
     yield put(taskLoaded(task));
-    // Initialize Timer value
-    console.log('calling action udpate timer: ', task.allowedTimeInSeconds);
-    yield put(updateTimerValue(task.allowedTimeInSeconds));
   } catch (error) {
     yield put(taskLoadingError(error));
   }
@@ -68,14 +67,22 @@ export function* saveAnswer() {
   };
 
   try {
-    const submission = yield call(request, requestURL, options);
+    yield call(request, requestURL, options); // return new submission document
     // submission successful, update state
-    const notification = 'Your answer has been submitted successfully!';
-    yield put(answerSaved(submission, notification));
+    const notification = {
+      type: notificationType.SUCCESS,
+      message: 'Your submission was successful!',
+    };
+    yield put(updateGlobalNotification(notification));
+    // Reset Task state
+    yield put(reset());
     // redirect to home
     yield put(push('/'));
   } catch (error) {
-    const notification = 'Oops error occured, Please try again!';
+    const notification = {
+      type: notificationType.ERROR,
+      message: 'Oops error occured, Please try again!',
+    };
     yield put(answerSavingError(error, notification));
   }
 }
