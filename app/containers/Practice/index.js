@@ -50,6 +50,7 @@ export function Practice({ loading, error, tests, fetchTests, onSelectTest }) {
       </Helmet>
       <FormattedMessage {...messages.header} />
       <br />
+      <br />
       <PracticeTestList {...practiceTestListProps} />
     </div>
   );

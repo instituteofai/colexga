@@ -9,10 +9,9 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import About from 'containers/About/Loadable';
 import Practice from 'containers/Practice/Loadable';
@@ -24,19 +23,29 @@ import TaskDetails from 'containers/TaskDetails/Loadable';
 
 import GlobalStyle from '../../global-styles';
 import Header from '../../components/Header';
+import Home from '../Home';
+
+const AppWrapper = styled.div`
+  max-width: calc(768px + 16px * 2);
+  margin: 0 auto;
+  display: flex;
+  min-height: 100%;
+  padding: 0 16px;
+  flex-direction: column;
+`;
 
 export default function App() {
   return (
-    <div>
+    <AppWrapper>
       <Helmet titleTemplate="%s - Colexga" defaultTitle="Colexga">
         <meta
           name="description"
-          content="A platform to write essays and get the scores"
+          content="A platform to write essays and get its evaluation"
         />
       </Helmet>
       <Header />
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={Home} />
         <Route exact path="/practice" component={Practice} />
         <Route exact path="/task/*" component={Task} />
         <Route exact path="/register" component={Register} />
@@ -47,6 +56,6 @@ export default function App() {
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
-    </div>
+    </AppWrapper>
   );
 }

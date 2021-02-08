@@ -29,5 +29,39 @@ const makeSelectTask = () =>
     taskState => taskState.task,
   );
 
+const makeSelectAnswer = () =>
+  createSelector(
+    selectTaskDomain,
+    taskState => taskState.answerText,
+  );
+
+const makeSelectSubmission = () =>
+  createSelector(
+    selectTaskDomain,
+    taskState => taskState.submission,
+  );
+
+const makeSelectAnsNotification = () =>
+  createSelector(
+    selectTaskDomain,
+    taskState => taskState.answerNotification,
+  );
+
+const makeSelectTimerValue = () =>
+  createSelector(
+    selectTaskDomain,
+    taskState => taskState.timerValueInSeconds,
+  );
+
 export default makeSelectTask;
-export { selectTaskDomain, makeSelectLoading, makeSelectError, makeSelectTask };
+
+export {
+  selectTaskDomain,
+  makeSelectLoading,
+  makeSelectError,
+  makeSelectTask,
+  makeSelectAnswer,
+  makeSelectSubmission,
+  makeSelectAnsNotification,
+  makeSelectTimerValue,
+};

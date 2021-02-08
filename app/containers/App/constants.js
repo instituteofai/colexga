@@ -8,3 +8,12 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
+
+export const UPDATE_GLOBAL_NOTIFICATION = 'app/App/UPDATE_GLOBAL_NOTIFICATION';
+
+export const notificationType = {
+  SUCCESS: 'SUCCESS',
+  WARNING: 'WARNING',
+  ERROR: 'ERROR',
+  INFORMATION: 'INFORMATION',
+};
