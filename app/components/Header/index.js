@@ -34,6 +34,10 @@ function Header() {
       <div>
         <HeaderLink to="/about">About</HeaderLink>
       </div>
+      {/* TODO: show this link only if signed in user has administrator role */}
+      <div>
+        <HeaderLink to="/admin">Admin Dashboard</HeaderLink>
+      </div>
     </NavBar>
   );
 }

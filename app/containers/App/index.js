@@ -18,6 +18,9 @@ import About from 'containers/About/Loadable';
 import Practice from 'containers/Practice/Loadable';
 import Task from 'containers/Task/Loadable';
 import Register from 'containers/Register/Loadable';
+import AdminDashboard from 'containers/AdminDashboard/Loadable';
+import MaintainTask from 'containers/MaintainTask/Loadable';
+import TaskDetails from 'containers/TaskDetails/Loadable';
 
 import GlobalStyle from '../../global-styles';
 import Header from '../../components/Header';
@@ -38,6 +41,9 @@ export default function App() {
         <Route exact path="/task/*" component={Task} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/about" component={About} />
+        <Route exact path="/admin" component={AdminDashboard} />
+        <Route exact path="/admin/:id/:taskId" component={TaskDetails} />
+        <Route exact path="/admin/:id" component={MaintainTask} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
