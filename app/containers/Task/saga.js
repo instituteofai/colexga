@@ -54,7 +54,8 @@ export function* saveAnswer() {
     testId: task._id,
     testName: test.name,
     userId: task._id, // TODO: Change
-    username: 'Chandan Kumar', // TODO: Change
+    displayName: 'Chandan Kumar', // TODO: Change
+    email: 'chandankumar99341@gmail.com',
     lastModified: new Date(),
     isEvaluated: true,
   };

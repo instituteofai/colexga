@@ -1,15 +1,34 @@
 const express = require('express');
 const { resolve } = require('path');
 const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
 const setup = require('./middlewares/frontendMiddleware');
+require('./config/passport-setup');
 
 const app = express();
 
+// Parse cookies
+app.use(cookieParser());
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
 
 // Custom backend-specific middleware here
 const api = require('./api');
+const keys = require('./config/keys');
+
+app.use(
+  cookieSession({
+    name: 'session',
+    maxAge: 24 * 60 * 60 * 1000, // ms
+    keys: [keys.session.cookieKey],
+  }),
+);
+
+app.use(passport.initialize());
+// Deserialize cookie from the browser
+app.use(passport.session());
 app.use('/api', api);
 
 // In production we need to pass these values in instead of relying on webpack

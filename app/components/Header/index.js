@@ -12,6 +12,7 @@ import Img from './Img';
 // import styled from 'styled-components';
 import NavBar from './NavBar';
 import Logo from './logo.png';
+import Button from '../Button';
 
 function Header() {
   return (
@@ -29,7 +30,9 @@ function Header() {
         <HeaderLink to="/practice">Practice</HeaderLink>
       </div>
       <div>
-        <HeaderLink to="/register">Register</HeaderLink>
+        <Button onClick={() => window.open('/api/auth/google', '_self')}>
+          Google Login
+        </Button>
       </div>
       <div>
         <HeaderLink to="/about">About</HeaderLink>
