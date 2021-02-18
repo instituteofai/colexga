@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -19,11 +19,16 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import NotifyBanner from '../../components/NotifyBanner';
-import { makeSelectGlobalNotification } from '../App/selectors';
+import { makeSelectGlobalNotification, makeSelectUser } from '../App/selectors';
+import { getUser } from '../App/actions';
 
-export function Home({ globalNotification }) {
+export function Home({ globalNotification, user, loadUser }) {
   useInjectReducer({ key: 'home', reducer });
   useInjectSaga({ key: 'home', saga });
+
+  useEffect(() => {
+    if (!user) loadUser();
+  }, []);
 
   return (
     <div>
@@ -37,6 +42,25 @@ export function Home({ globalNotification }) {
           <NotifyBanner message={globalNotification.message} />
         </div>
       )}
+      {user && (
+        <div>
+          <h3>User is authenticated</h3>
+          <button
+            type="button"
+            onClick={() => window.open('/api/auth/logout', '_self')}
+          >
+            Logout
+          </button>
+        </div>
+      )}
+      {!user && (
+        <button
+          type="button"
+          onClick={() => window.open('/api/auth/google', '_self')}
+        >
+          Google Login
+        </button>
+      )}
     </div>
   );
 }
@@ -44,16 +68,20 @@ export function Home({ globalNotification }) {
 Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   globalNotification: PropTypes.object,
+  user: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  loadUser: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   home: makeSelectHome(),
   globalNotification: makeSelectGlobalNotification(),
+  user: makeSelectUser(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
+    loadUser: () => dispatch(getUser()),
   };
 }
 

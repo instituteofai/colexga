@@ -24,7 +24,7 @@ passport.use(
       callbackURL: keys.google.redirectUrl,
     },
     async (accessToken, refreshToken, profile, done) => {
-      logger.log('Got profile', profile);
+      logger.log('Got Profile: pass setup', profile);
       const currentUser = await User.findOne({
         googleProfileId: profile.id,
       });

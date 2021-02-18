@@ -21,9 +21,13 @@ import AdminDashboard from 'containers/AdminDashboard/Loadable';
 import MaintainTask from 'containers/MaintainTask/Loadable';
 import TaskDetails from 'containers/TaskDetails/Loadable';
 
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
 import GlobalStyle from '../../global-styles';
 import Header from '../../components/Header';
 import Home from '../Home';
+import saga from './saga';
+import reducer from './reducer';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -35,6 +39,8 @@ const AppWrapper = styled.div`
 `;
 
 export default function App() {
+  useInjectReducer({ key: 'global', reducer });
+  useInjectSaga({ key: 'global', saga });
   return (
     <AppWrapper>
       <Helmet titleTemplate="%s - Colexga" defaultTitle="Colexga">

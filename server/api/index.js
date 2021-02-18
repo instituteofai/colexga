@@ -39,27 +39,28 @@ router
   .route('/auth/google')
   .get(passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-router.route('/auth/login/success', (req, res) => {
+router.route('/auth/login/success').get((req, res) => {
   if (req.user) {
-    res.json({
+    res.status(201).json({
       success: true,
-      message: 'Successfully authenticated!',
+      message: 'Successfully Authenticated!',
       user: req.user,
-      cookies: req.cookies,
+      // cookies: req.cookies,
     });
   }
 });
 
-router.route('/auth/login/failed', (req, res) => {
+router.route('/auth/login/failed').get((req, res) => {
   res.status(401).json({
     success: false,
     message: 'Failed to authenticate!',
   });
 });
 
-router.route('/auth/logout', (req, res) => {
+router.route('/auth/logout').get((req, res) => {
+  req.session = null;
   req.logout();
-  res.redirect('/about');
+  res.redirect('/');
 });
 
 router.route('/auth/google/redirect').get(
@@ -67,7 +68,7 @@ router.route('/auth/google/redirect').get(
     failureRedirect: '/auth/login/failed',
   }),
   (req, res) => {
-    res.redirect('/about');
+    res.redirect('/');
   },
 );
 

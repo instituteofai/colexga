@@ -10,6 +10,8 @@
  */
 
 export const UPDATE_GLOBAL_NOTIFICATION = 'app/App/UPDATE_GLOBAL_NOTIFICATION';
+export const UPDATE_USER = 'app/App/UPDATE_USER';
+export const GET_USER = 'app/App/GET_USER';
 
 export const notificationType = {
   SUCCESS: 'SUCCESS',
