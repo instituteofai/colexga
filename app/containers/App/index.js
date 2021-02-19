@@ -11,6 +11,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import About from 'containers/About/Loadable';
@@ -28,6 +32,8 @@ import Header from '../../components/Header';
 import Home from '../Home';
 import saga from './saga';
 import reducer from './reducer';
+import { getUser } from './actions';
+import { makeSelectUser } from './selectors';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -38,9 +44,18 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export default function App() {
+export function App({ loadUser, user }) {
   useInjectReducer({ key: 'global', reducer });
   useInjectSaga({ key: 'global', saga });
+
+  React.useEffect(() => {
+    if (!user) loadUser();
+  }, [user]);
+
+  const headerProps = {
+    user,
+  };
+
   return (
     <AppWrapper>
       <Helmet titleTemplate="%s - Colexga" defaultTitle="Colexga">
@@ -49,7 +64,7 @@ export default function App() {
           content="A platform to write essays and get its evaluation"
         />
       </Helmet>
-      <Header />
+      <Header {...headerProps} />
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/practice" component={Practice} />
@@ -65,3 +80,26 @@ export default function App() {
     </AppWrapper>
   );
 }
+
+App.propTypes = {
+  loadUser: PropTypes.func,
+  user: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+};
+
+const mapStateToProps = createStructuredSelector({
+  user: makeSelectUser(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    loadUser: () => dispatch(getUser()),
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(App);

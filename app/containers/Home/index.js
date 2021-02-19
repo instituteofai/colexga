@@ -4,7 +4,7 @@
  *
  */
 
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -20,15 +20,10 @@ import saga from './saga';
 import messages from './messages';
 import NotifyBanner from '../../components/NotifyBanner';
 import { makeSelectGlobalNotification, makeSelectUser } from '../App/selectors';
-import { getUser } from '../App/actions';
 
-export function Home({ globalNotification, user, loadUser }) {
+export function Home({ globalNotification, user }) {
   useInjectReducer({ key: 'home', reducer });
   useInjectSaga({ key: 'home', saga });
-
-  useEffect(() => {
-    if (!user) loadUser();
-  }, []);
 
   return (
     <div>
@@ -44,22 +39,8 @@ export function Home({ globalNotification, user, loadUser }) {
       )}
       {user && (
         <div>
-          <h3>User is authenticated</h3>
-          <button
-            type="button"
-            onClick={() => window.open('/api/auth/logout', '_self')}
-          >
-            Logout
-          </button>
+          <h3>Welcome {user.displayName}</h3>
         </div>
-      )}
-      {!user && (
-        <button
-          type="button"
-          onClick={() => window.open('/api/auth/google', '_self')}
-        >
-          Google Login
-        </button>
       )}
     </div>
   );
@@ -69,7 +50,6 @@ Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   globalNotification: PropTypes.object,
   user: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  loadUser: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -81,7 +61,6 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     dispatch,
-    loadUser: () => dispatch(getUser()),
   };
 }
 

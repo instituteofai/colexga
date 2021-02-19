@@ -5,6 +5,7 @@ import { takeLatest, call, put, select } from 'redux-saga/effects';
 import request from '../../utils/request';
 import { updateGlobalNotification } from '../App/actions';
 import { notificationType } from '../App/constants';
+import { makeSelectUser } from '../App/selectors';
 import { makeSelectTestId, makeSelectTests } from '../Practice/selectors';
 import {
   answerSaved,
@@ -36,6 +37,7 @@ export function* getTask() {
 }
 
 export function* saveAnswer() {
+  const user = yield select(makeSelectUser());
   const testId = yield select(makeSelectTestId());
   const task = yield select(makeSelectTask());
   const tests = yield select(makeSelectTests());
@@ -49,15 +51,15 @@ export function* saveAnswer() {
     questionType: task.questionType,
     answer: answerText,
     timeLeftInSeconds,
-    score: 8.2,
+    score: 4.2,
     createdOn: new Date(),
     testId: task._id,
     testName: test.name,
-    userId: task._id, // TODO: Change
-    displayName: 'Chandan Kumar', // TODO: Change
-    email: 'chandankumar99341@gmail.com',
+    userId: user._id,
+    displayName: user.displayName,
+    email: user.email,
     lastModified: new Date(),
-    isEvaluated: true,
+    isEvaluated: false,
   };
   const options = {
     method: 'POST',
