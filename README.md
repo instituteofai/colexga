@@ -1,4 +1,4 @@
-Colexgram
+Colexga
 ---
 
 ### How to Run
