@@ -19,7 +19,6 @@ describe('Tasks API', () => {
       .post(`/api/tests/${testId}/tasks`)
       .send({
         question: 'Sample question',
-        questionType: 'ESSAY',
         allowedTimeInSeconds: 1200,
       })
       .expect(201);
@@ -45,7 +44,6 @@ describe('Tasks API', () => {
       .post(`/api/tests/${testId}/tasks`)
       .send({
         question: 'Sample question',
-        questionType: 'ESSAY',
         allowedTimeInSeconds: 1200,
       })
       .expect(201);
@@ -64,7 +62,6 @@ describe('Tasks API', () => {
       .post(`/api/tests/${testId}/tasks`)
       .send({
         question: 'Sample question',
-        questionType: 'ESSAY',
         allowedTimeInSeconds: 1200,
       })
       .expect(201);
@@ -72,21 +69,18 @@ describe('Tasks API', () => {
     const taskId = res.body._id;
 
     const newQuestion = 'New question';
-    const newQuestionType = 'ESSAY';
     const newTime = 1500;
 
     const updateRes = await request(app)
       .put(`/api/tests/${testId}/tasks/${taskId}`)
-      .send({ question: newQuestion, questionType: newQuestionType, allowedTimeInSeconds: newTime })
+      .send({ question: newQuestion, allowedTimeInSeconds: newTime })
       .expect(200);
 
     expect(updateRes.body.question).to.equal(newQuestion);
-    expect(updateRes.body.questionType).to.equal(newQuestionType)
     expect(updateRes.body.allowedTimeInSeconds).to.equal(newTime);
 
     const updatedTask = await Task.findById(taskId);
     expect(updatedTask.question).to.equal(newQuestion);
-    expect(updatedTask.questionType).to.equal(newQuestionType);
     expect(updatedTask.allowedTimeInSeconds).to.equal(newTime);
 
   });
@@ -97,7 +91,6 @@ describe('Tasks API', () => {
       .post(`/api/tests/${testId}/tasks`)
       .send({
         question: 'Sample question to delete',
-        questionType: 'ESSAY',
         allowedTimeInSeconds: 1200,
       })
       .expect(201);
@@ -122,7 +115,6 @@ describe('Tasks API', () => {
       .post(`/api/tests/${testId}/tasks`)
       .send({
         question: 'Sample question to delete with test',
-        questionType: 'ESSAY',
         allowedTimeInSeconds: 1200,
       })
       .expect(201);
