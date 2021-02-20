@@ -47,11 +47,6 @@ const submissionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  displayName: {
-    type: String,
-    trim: true,
-    required: true,
-  },
   email: {
     type: String,
     trim: true,

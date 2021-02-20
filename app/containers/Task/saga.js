@@ -56,7 +56,6 @@ export function* saveAnswer() {
     testId: task._id,
     testName: test.name,
     userId: user._id,
-    displayName: user.displayName,
     email: user.email,
     lastModified: new Date(),
     isEvaluated: false,

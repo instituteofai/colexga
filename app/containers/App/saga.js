@@ -11,7 +11,7 @@ export function* getUser() {
     const user = yield call(request, requestURL);
     yield put(updateUser(user.user));
   } catch (error) {
-    throw new Error(error);
+    yield put(updateUser(false));
   }
 }
 

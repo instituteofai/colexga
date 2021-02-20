@@ -43,9 +43,14 @@ router.route('/auth/login/success').get((req, res) => {
   if (req.user) {
     res.status(201).json({
       success: true,
-      message: 'Successfully Authenticated!',
+      message: 'Successfully authenticated!',
       user: req.user,
       // cookies: req.cookies,
+    });
+  } else {
+    res.status(201).json({
+      success: true,
+      message: 'Not authenticated!',
     });
   }
 });

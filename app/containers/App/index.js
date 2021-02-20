@@ -50,7 +50,7 @@ export function App({ loadUser, user }) {
 
   React.useEffect(() => {
     if (!user) loadUser();
-  }, [user]);
+  }, []);
 
   const headerProps = {
     user,

@@ -5,7 +5,8 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const setup = require('./middlewares/frontendMiddleware');
-require('./config/passport-setup');
+const { session } = require('./vars');
+require('./utils/passport-setup');
 
 const app = express();
 
@@ -16,13 +17,12 @@ app.use(bodyParser.json());
 
 // Custom backend-specific middleware here
 const api = require('./api');
-const keys = require('./config/keys');
 
 app.use(
   cookieSession({
     name: 'session',
     maxAge: 24 * 60 * 60 * 1000, // ms
-    keys: [keys.session.cookieKey],
+    keys: [session.cookieKey],
   }),
 );
 
