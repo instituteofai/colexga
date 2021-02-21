@@ -47,10 +47,10 @@ const submissionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-  username: {
+  email: {
     type: String,
     trim: true,
-    required: true,
+    required: false,
   },
   lastModified: {
     type: mongoose.Schema.Types.Date,

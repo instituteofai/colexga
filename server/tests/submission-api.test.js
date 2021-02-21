@@ -42,8 +42,8 @@ describe('Submission API', () => {
       createdOn: new Date(),
       testId: task._id,
       testName: test.name,
-      userId: task._id, // TODO: Change
-      username: 'Chandan Kumar', // TODO: Change
+      userId: task._id,
+      email: 'chandan@instituteofai.com',
       lastModified: new Date(),
       isEvaluated: true,
     };
@@ -77,8 +77,8 @@ describe('Submission API', () => {
       createdOn: new Date(),
       testId: task._id,
       testName: test.name,
-      userId: task._id, // TODO: Change
-      username: 'Chandan Kumar', // TODO: Change
+      userId: task._id,
+      email: 'chandan@instituteofai.com',
       lastModified: new Date(),
       isEvaluated: true,
     };
@@ -107,8 +107,8 @@ describe('Submission API', () => {
       createdOn: new Date(),
       testId: task._id,
       testName: test.name,
-      userId: task._id, // TODO: Change
-      username: 'Chandan Kumar', // TODO: Change
+      userId: task._id,
+      email: 'chandan@instituteofai.com',
       lastModified: new Date(),
       isEvaluated: true,
     };
@@ -147,8 +147,8 @@ describe('Submission API', () => {
       createdOn: new Date(),
       testId: task._id,
       testName: test.name,
-      userId: task._id, // TODO: Change
-      username: 'Chandan Kumar', // TODO: Change
+      userId: task._id,
+      email: 'chandan@instituteofai.com',
       lastModified: new Date(),
       isEvaluated: true,
     };

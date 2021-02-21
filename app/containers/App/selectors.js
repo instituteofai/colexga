@@ -5,6 +5,12 @@ const selectGlobal = state => state.global || initialState;
 
 const selectRouter = state => state.router;
 
+const makeSelectUser = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.user,
+  );
+
 const makeSelectGlobalNotification = () =>
   createSelector(
     selectGlobal,
@@ -17,4 +23,9 @@ const makeSelectLocation = () =>
     routerState => routerState.location,
   );
 
-export { selectGlobal, makeSelectLocation, makeSelectGlobalNotification };
+export {
+  selectGlobal,
+  makeSelectLocation,
+  makeSelectGlobalNotification,
+  makeSelectUser,
+};

@@ -5,10 +5,10 @@
  */
 
 import produce from 'immer';
-import { UPDATE_GLOBAL_NOTIFICATION } from './constants';
+import { UPDATE_GLOBAL_NOTIFICATION, UPDATE_USER, GET_USER } from './constants';
 
 export const initialState = {
-  currentUser: false,
+  user: false,
   notification: {
     type: false,
     message: false,
@@ -21,6 +21,11 @@ const appReducer = (state = initialState, action) =>
     switch (action.type) {
       case UPDATE_GLOBAL_NOTIFICATION:
         draft.notification = action.notification;
+        break;
+      case GET_USER:
+        break;
+      case UPDATE_USER:
+        draft.user = action.user;
         break;
     }
   });

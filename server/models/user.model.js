@@ -1,16 +1,20 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+  identityProviderId: {
+    type: String,
+    trim: true,
+    required: true,
+  },
   displayName: {
     type: String,
     trim: true,
+    required: true,
   },
   email: {
     type: String,
     trim: true,
-  },
-  tasksCompleted: {
-    type: Array,
+    required: true,
   },
 });
 

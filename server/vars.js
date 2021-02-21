@@ -10,4 +10,12 @@ module.exports = {
   mongo: {
     uri: process.env.MONGO_URI,
   },
+  google: {
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    redirectUrl: process.env.REDIRECT_URL,
+  },
+  session: {
+    cookieKey: process.env.COOKIE_KEY,
+  },
 };

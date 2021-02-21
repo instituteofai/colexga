@@ -19,9 +19,9 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import NotifyBanner from '../../components/NotifyBanner';
-import { makeSelectGlobalNotification } from '../App/selectors';
+import { makeSelectGlobalNotification, makeSelectUser } from '../App/selectors';
 
-export function Home({ globalNotification }) {
+export function Home({ globalNotification, user }) {
   useInjectReducer({ key: 'home', reducer });
   useInjectSaga({ key: 'home', saga });
 
@@ -37,6 +37,11 @@ export function Home({ globalNotification }) {
           <NotifyBanner message={globalNotification.message} />
         </div>
       )}
+      {user && (
+        <div>
+          <h3>Welcome {user.displayName}</h3>
+        </div>
+      )}
     </div>
   );
 }
@@ -44,11 +49,13 @@ export function Home({ globalNotification }) {
 Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   globalNotification: PropTypes.object,
+  user: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
 const mapStateToProps = createStructuredSelector({
   home: makeSelectHome(),
   globalNotification: makeSelectGlobalNotification(),
+  user: makeSelectUser(),
 });
 
 function mapDispatchToProps(dispatch) {
