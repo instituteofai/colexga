@@ -48,7 +48,6 @@ export function* saveAnswer() {
   const payload = {
     taskId: task._id,
     question: task.question,
-    questionType: task.questionType,
     answer: answerText,
     timeLeftInSeconds,
     score: 4.2,
