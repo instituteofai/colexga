@@ -3,7 +3,7 @@ import { push } from 'connected-react-router';
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 
 import request from '../../utils/request';
-import { showGlobalNotification } from '../App/actions';
+import { getUserSubmissions, showGlobalNotification } from '../App/actions';
 import { notificationType } from '../App/constants';
 import { makeSelectUser } from '../App/selectors';
 import { makeSelectTestId, makeSelectTests } from '../Practice/selectors';
@@ -75,6 +75,8 @@ export function* saveAnswer() {
     };
     // Update global notification
     yield put(showGlobalNotification(notification));
+    // Reload user submissions to reflect on Dashboard
+    yield put(getUserSubmissions(user._id));
     // Reset Task state
     yield put(reset());
     // redirect to home

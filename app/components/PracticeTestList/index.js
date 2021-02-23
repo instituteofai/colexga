@@ -7,7 +7,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import LoadingIndicator from '../LoadingIndicator';
 import { notificationType } from '../../containers/App/constants';
@@ -44,7 +43,6 @@ function PracticeTestList({
             to={`/task/${test._id}`}
             onClick={event => {
               event.preventDefault();
-              // alert('Please login to attempt the task!');
               notify(notification);
             }}
           >

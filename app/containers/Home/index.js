@@ -19,11 +19,20 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import NotifyBanner from '../../components/NotifyBanner';
-import { makeSelectGlobalNotification, makeSelectUser } from '../App/selectors';
+import UserSubmissionList from '../../components/UserSubmissionList';
+import {
+  makeSelectGlobalNotification,
+  makeSelectUser,
+  makeSelectUserSubmissions,
+} from '../App/selectors';
 
-export function Home({ globalNotification, user }) {
+export function Home({ globalNotification, user, userSubmissions }) {
   useInjectReducer({ key: 'home', reducer });
   useInjectSaga({ key: 'home', saga });
+
+  const userSubmissionListProps = {
+    userSubmissions,
+  };
 
   return (
     <div>
@@ -42,6 +51,8 @@ export function Home({ globalNotification, user }) {
           <h3>Welcome {user.displayName}</h3>
         </div>
       )}
+      <h3>Your Submissions:</h3>
+      <UserSubmissionList {...userSubmissionListProps} />
     </div>
   );
 }
@@ -50,12 +61,14 @@ Home.propTypes = {
   dispatch: PropTypes.func.isRequired,
   globalNotification: PropTypes.object,
   user: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  userSubmissions: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 const mapStateToProps = createStructuredSelector({
   home: makeSelectHome(),
   globalNotification: makeSelectGlobalNotification(),
   user: makeSelectUser(),
+  userSubmissions: makeSelectUserSubmissions(),
 });
 
 function mapDispatchToProps(dispatch) {

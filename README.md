@@ -23,3 +23,11 @@ More details [here](https://github.com/react-boilerplate/react-boilerplate/blob/
 | ---- | ---------- |
 | Practice | A Specific type of Test-set such as IELTS, GRE etc |
 | Task | A question from the Test-set, Type of Essay, Letter etc |
+
+### Common Objects/Patterns used
+```
+const notification = {
+    type: 'SUCCESS',
+    message: 'Your message here!',
+  };
+```
