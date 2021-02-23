@@ -3,12 +3,11 @@ import { push } from 'connected-react-router';
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 
 import request from '../../utils/request';
-import { updateGlobalNotification } from '../App/actions';
+import { showGlobalNotification } from '../App/actions';
 import { notificationType } from '../App/constants';
 import { makeSelectUser } from '../App/selectors';
 import { makeSelectTestId, makeSelectTests } from '../Practice/selectors';
 import {
-  answerSaved,
   answerSavingError,
   reset,
   taskLoaded,
@@ -74,7 +73,8 @@ export function* saveAnswer() {
       type: notificationType.SUCCESS,
       message: 'Your submission was successful!',
     };
-    yield put(updateGlobalNotification(notification));
+    // Update global notification
+    yield put(showGlobalNotification(notification));
     // Reset Task state
     yield put(reset());
     // redirect to home

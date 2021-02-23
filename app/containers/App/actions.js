@@ -1,8 +1,20 @@
-import { GET_USER, UPDATE_GLOBAL_NOTIFICATION, UPDATE_USER } from './constants';
+import {
+  GET_USER,
+  SHOW_GLOBAL_NOTIFICATION,
+  HIDE_GLOBAL_NOTIFICATION,
+  UPDATE_USER,
+} from './constants';
 
-export function updateGlobalNotification(notification) {
+export function showGlobalNotification(notification) {
   return {
-    type: UPDATE_GLOBAL_NOTIFICATION,
+    type: SHOW_GLOBAL_NOTIFICATION,
+    notification,
+  };
+}
+
+export function hideGlobalNotification(notification) {
+  return {
+    type: HIDE_GLOBAL_NOTIFICATION,
     notification,
   };
 }

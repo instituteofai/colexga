@@ -1,8 +1,8 @@
-import { takeLatest, call, put } from 'redux-saga/effects';
+import { takeLatest, call, put, delay } from 'redux-saga/effects';
 
 import request from '../../utils/request';
-import { updateUser } from './actions';
-import { GET_USER } from './constants';
+import { hideGlobalNotification, updateUser } from './actions';
+import { GET_USER, SHOW_GLOBAL_NOTIFICATION } from './constants';
 
 export function* getUser() {
   const requestURL = `/api/auth/login/success`;
@@ -15,6 +15,13 @@ export function* getUser() {
   }
 }
 
-export default function* updateUserData() {
+export function* hideGlobNotification() {
+  // Wait for 5 seconds, Then reset notification message
+  yield delay(5000);
+  yield put(hideGlobalNotification({ type: false, message: false }));
+}
+
+export default function* watchActions() {
   yield takeLatest(GET_USER, getUser);
+  yield takeLatest(SHOW_GLOBAL_NOTIFICATION, hideGlobNotification);
 }

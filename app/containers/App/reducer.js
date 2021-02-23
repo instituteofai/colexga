@@ -5,7 +5,12 @@
  */
 
 import produce from 'immer';
-import { UPDATE_GLOBAL_NOTIFICATION, UPDATE_USER, GET_USER } from './constants';
+import {
+  SHOW_GLOBAL_NOTIFICATION,
+  HIDE_GLOBAL_NOTIFICATION,
+  UPDATE_USER,
+  GET_USER,
+} from './constants';
 
 export const initialState = {
   user: false,
@@ -19,7 +24,10 @@ export const initialState = {
 const appReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
-      case UPDATE_GLOBAL_NOTIFICATION:
+      case SHOW_GLOBAL_NOTIFICATION:
+        draft.notification = action.notification;
+        break;
+      case HIDE_GLOBAL_NOTIFICATION:
         draft.notification = action.notification;
         break;
       case GET_USER:

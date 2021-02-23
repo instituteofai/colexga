@@ -22,11 +22,24 @@ import makeSelectPractice, {
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import { loadTests, selectTest } from './actions';
 import PracticeTestList from '../../components/PracticeTestList';
+import NotifyBanner from '../../components/NotifyBanner';
+
+import { makeSelectGlobalNotification, makeSelectUser } from '../App/selectors';
+import { loadTests, selectTest } from './actions';
+import { showGlobalNotification } from '../App/actions';
 
 // export function Practice(props) {}
-export function Practice({ loading, error, tests, fetchTests, onSelectTest }) {
+export function Practice({
+  loading,
+  error,
+  tests,
+  fetchTests,
+  onSelectTest,
+  user,
+  globalNotification,
+  notify,
+}) {
   useInjectReducer({ key: 'practice', reducer });
   useInjectSaga({ key: 'practice', saga });
 
@@ -40,6 +53,8 @@ export function Practice({ loading, error, tests, fetchTests, onSelectTest }) {
     error,
     tests,
     onSelectTest,
+    user,
+    notify,
   };
 
   return (
@@ -49,6 +64,11 @@ export function Practice({ loading, error, tests, fetchTests, onSelectTest }) {
         <meta name="description" content="Description of Practice" />
       </Helmet>
       <FormattedMessage {...messages.header} />
+      {globalNotification.message && (
+        <div>
+          <NotifyBanner message={globalNotification.message} />
+        </div>
+      )}
       <br />
       <br />
       <PracticeTestList {...practiceTestListProps} />
@@ -63,6 +83,10 @@ Practice.propTypes = {
   tests: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   fetchTests: PropTypes.func,
   onSelectTest: PropTypes.func,
+  showGlobalNotification: PropTypes.func,
+  globalNotification: PropTypes.object,
+  user: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  notify: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -70,6 +94,8 @@ const mapStateToProps = createStructuredSelector({
   tests: makeSelectTests(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
+  user: makeSelectUser(),
+  globalNotification: makeSelectGlobalNotification(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -78,6 +104,9 @@ function mapDispatchToProps(dispatch) {
     fetchTests: () => dispatch(loadTests()),
     onSelectTest: testId => {
       dispatch(selectTest(testId));
+    },
+    notify: notification => {
+      dispatch(showGlobalNotification(notification));
     },
   };
 }
