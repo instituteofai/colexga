@@ -11,11 +11,6 @@ const submissionSchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
-  questionType: {
-    type: String,
-    trim: true,
-    required: true,
-  },
   answer: {
     type: String,
     trim: true,

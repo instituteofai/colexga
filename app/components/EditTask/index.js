@@ -11,23 +11,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-function EditTask({ onSave, currentType, currentDuration, currentQuestion }) {
-  const [type, setType] = useState(currentType || '');
+function EditTask({ onSave, currentDuration, currentQuestion }) {
   const [duration, setDuration] = useState(currentDuration || 1200);
   const [question, setQuestion] = useState(currentQuestion || '');
 
   return (
     <div>
       <FormattedMessage {...messages.header} />
-      <div>
-        <label htmlFor="taskQuestionType">Question Type</label>
-        <input
-          type="text"
-          id="taskQuestionType"
-          value={type}
-          onChange={e => setType(e.target.value)}
-        />
-      </div>
       <div>
         <label htmlFor="taskDuration">Duration</label>
         <input
@@ -49,7 +39,7 @@ function EditTask({ onSave, currentType, currentDuration, currentQuestion }) {
         <button
           type="button"
           onClick={() => {
-            onSave(type, duration, question);
+            onSave(duration, question);
           }}
         >
           Save

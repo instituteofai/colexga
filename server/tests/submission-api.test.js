@@ -24,7 +24,6 @@ describe('Submission API', () => {
       .post(`/api/tests/${testId}/tasks`)
       .send({
         question: 'Sample question',
-        questionType: 'ESSAY',
         allowedTimeInSeconds: 1200,
         test: testId
       })
@@ -35,7 +34,6 @@ describe('Submission API', () => {
     const payload = {
       taskId: task._id,
       question: task.question,
-      questionType: task.questionType,
       answer: 'Sample answer',
       timeLeftInSeconds: 20,
       score: 8.2,
@@ -70,7 +68,6 @@ describe('Submission API', () => {
     const payload = {
       taskId: task._id,
       question: task.question,
-      questionType: task.questionType,
       answer: 'Sample answer',
       timeLeftInSeconds: 20,
       score: 8.2,
@@ -100,7 +97,6 @@ describe('Submission API', () => {
     const payload = {
       taskId: task._id,
       question: task.question,
-      questionType: task.questionType,
       answer: 'Sample answer',
       timeLeftInSeconds: 20,
       score: 8.2,
@@ -140,7 +136,6 @@ describe('Submission API', () => {
     const payload = {
       taskId: task._id,
       question: task.question,
-      questionType: task.questionType,
       answer: 'Sample answer',
       timeLeftInSeconds: 20,
       score: 8.2,

@@ -17,6 +17,12 @@ const makeSelectGlobalNotification = () =>
     globalState => globalState.notification,
   );
 
+const makeSelectUserSubmissions = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.userSubmissions,
+  );
+
 const makeSelectLocation = () =>
   createSelector(
     selectRouter,
@@ -28,4 +34,5 @@ export {
   makeSelectLocation,
   makeSelectGlobalNotification,
   makeSelectUser,
+  makeSelectUserSubmissions,
 };

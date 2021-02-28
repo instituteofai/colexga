@@ -3,12 +3,11 @@ import { push } from 'connected-react-router';
 import { takeLatest, call, put, select } from 'redux-saga/effects';
 
 import request from '../../utils/request';
-import { updateGlobalNotification } from '../App/actions';
+import { getUserSubmissions, showGlobalNotification } from '../App/actions';
 import { notificationType } from '../App/constants';
 import { makeSelectUser } from '../App/selectors';
 import { makeSelectTestId, makeSelectTests } from '../Practice/selectors';
 import {
-  answerSaved,
   answerSavingError,
   reset,
   taskLoaded,
@@ -48,7 +47,6 @@ export function* saveAnswer() {
   const payload = {
     taskId: task._id,
     question: task.question,
-    questionType: task.questionType,
     answer: answerText,
     timeLeftInSeconds,
     score: 4.2,
@@ -75,7 +73,10 @@ export function* saveAnswer() {
       type: notificationType.SUCCESS,
       message: 'Your submission was successful!',
     };
-    yield put(updateGlobalNotification(notification));
+    // Update global notification
+    yield put(showGlobalNotification(notification));
+    // Reload user submissions to reflect on Dashboard
+    yield put(getUserSubmissions(user._id));
     // Reset Task state
     yield put(reset());
     // redirect to home

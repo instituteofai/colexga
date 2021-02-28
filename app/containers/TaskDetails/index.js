@@ -27,15 +27,14 @@ export function TaskDetails({ dispatch, match, taskDetails }) {
 
   const { id: testId, taskId } = match.params;
 
-  const handleAddNew = (questionType, allowedTimeInSeconds, question) => {
-    dispatch(addTask(testId, { question, questionType, allowedTimeInSeconds }));
+  const handleAddNew = (allowedTimeInSeconds, question) => {
+    dispatch(addTask(testId, { question, allowedTimeInSeconds }));
   };
 
-  const handleUpdate = (questionType, allowedTimeInSeconds, question) => {
+  const handleUpdate = (allowedTimeInSeconds, question) => {
     dispatch(
       updateTask(testId, taskId, {
         question,
-        questionType,
         allowedTimeInSeconds,
       }),
     );
@@ -61,7 +60,6 @@ export function TaskDetails({ dispatch, match, taskDetails }) {
     return (
       <div>
         <EditTask
-          currentType={taskDetails.task.questionType}
           currentDuration={taskDetails.task.allowedTimeInSeconds}
           currentQuestion={taskDetails.task.question}
           onSave={handleUpdate}

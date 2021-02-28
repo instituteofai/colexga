@@ -43,10 +43,13 @@ function Header({ user }) {
           </Button>
         </div>
       )}
-      {/* TODO: show this link only if signed in user has administrator role */}
-      <div>
-        <HeaderLink to="/admin">Admin Dashboard</HeaderLink>
-      </div>
+      {user &&
+        (user.email === 'chandankumar99341@gmail.com' ||
+          user.email === 'mashru.ravi@gmail.com') && (
+        <div>
+          <HeaderLink to="/admin">Admin Dashboard</HeaderLink>
+        </div>
+      )}
     </NavBar>
   );
 }
